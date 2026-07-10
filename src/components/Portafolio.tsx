@@ -103,7 +103,12 @@ export default function Portafolio() {
 
   const fotosFiltradas =
     filtro === "Todos"
-      ? fotos
+      ? // Mostrar solo 4 fotos de cada categoría en "Todos"
+        categorias
+          .filter((cat) => cat !== "Todos")
+          .flatMap((cat) =>
+            fotos.filter((f) => f.categoria === cat).slice(0, 4)
+          )
       : fotos.filter((f) => f.categoria === filtro);
 
   const abrirLightbox = (index: number) => setLightbox(index);
