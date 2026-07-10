@@ -1,20 +1,36 @@
 import { NextRequest, NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
+import { put, list } from "@vercel/blob";
 
-const CLIENTES_FILE = path.join(process.cwd(), "src/data/clientes.json");
+const BLOB_NAME = "clientes.json";
 
-async function leerClientes() {
+interface Cliente {
+  slug: string;
+  nombre: string;
+  evento: string;
+  fecha: string;
+  codigo: string;
+  carpetaDriveId: string;
+}
+
+async function leerClientes(): Promise<{ clientes: Cliente[] }> {
   try {
-    const data = await fs.readFile(CLIENTES_FILE, "utf-8");
-    return JSON.parse(data);
+    const { blobs } = await list({ prefix: BLOB_NAME });
+    if (blobs.length === 0) {
+      return { clientes: [] };
+    }
+    const res = await fetch(blobs[0].url);
+    const data = await res.json();
+    return data;
   } catch {
     return { clientes: [] };
   }
 }
 
-async function guardarClientes(data: { clientes: unknown[] }) {
-  await fs.writeFile(CLIENTES_FILE, JSON.stringify(data, null, 2), "utf-8");
+async function guardarClientes(data: { clientes: Cliente[] }) {
+  await put(BLOB_NAME, JSON.stringify(data, null, 2), {
+    access: "public",
+    addRandomSuffix: false,
+  });
 }
 
 // GET - Obtener todos los clientes
@@ -26,13 +42,11 @@ export async function GET() {
 // POST - Agregar un nuevo cliente
 export async function POST(request: NextRequest) {
   try {
-    const nuevoCliente = await request.json();
+    const nuevoCliente: Cliente = await request.json();
     const data = await leerClientes();
 
     // Verificar que no exista ya
-    const existe = data.clientes.find(
-      (c: { slug: string }) => c.slug === nuevoCliente.slug
-    );
+    const existe = data.clientes.find((c) => c.slug === nuevoCliente.slug);
     if (existe) {
       return NextResponse.json(
         { error: "Ya existe un cliente con ese slug" },
@@ -47,7 +61,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Error agregando cliente:", error);
     return NextResponse.json(
-      { error: "Error interno" },
+      { error: "Error interno del servidor" },
       { status: 500 }
     );
   }

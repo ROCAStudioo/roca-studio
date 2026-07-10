@@ -1,5 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { google } from "googleapis";
+import { list } from "@vercel/blob";
+
+const BLOB_NAME = "clientes.json";
+
+interface Cliente {
+  slug: string;
+  nombre: string;
+  evento: string;
+  fecha: string;
+  codigo: string;
+  carpetaDriveId: string;
+}
 
 // Configuración de Google Drive API
 function getGoogleDriveClient() {
@@ -14,20 +26,20 @@ function getGoogleDriveClient() {
   return google.drive({ version: "v3", auth });
 }
 
-// Base de datos simple de clientes (después se puede migrar a Supabase/Firebase)
-// Por ahora usamos un archivo JSON o variables de entorno
-async function obtenerCliente(slug: string) {
-  // En producción esto vendría de una base de datos
-  // Por ahora, buscamos en un archivo de configuración
-  const clientesDB = await import("@/data/clientes.json").catch(() => ({
-    default: { clientes: [] },
-  }));
-
-  const cliente = clientesDB.default.clientes.find(
-    (c: { slug: string }) => c.slug === slug
-  );
-
-  return cliente || null;
+// Leer clientes desde Vercel Blob
+async function obtenerCliente(slug: string): Promise<Cliente | null> {
+  try {
+    const { blobs } = await list({ prefix: BLOB_NAME });
+    if (blobs.length === 0) {
+      return null;
+    }
+    const res = await fetch(blobs[0].url);
+    const data = await res.json();
+    const cliente = data.clientes.find((c: Cliente) => c.slug === slug);
+    return cliente || null;
+  } catch {
+    return null;
+  }
 }
 
 // Obtener fotos de una carpeta de Google Drive

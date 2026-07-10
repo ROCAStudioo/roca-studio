@@ -1,20 +1,36 @@
 import { NextRequest, NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
+import { put, list } from "@vercel/blob";
 
-const CLIENTES_FILE = path.join(process.cwd(), "src/data/clientes.json");
+const BLOB_NAME = "clientes.json";
 
-async function leerClientes() {
+interface Cliente {
+  slug: string;
+  nombre: string;
+  evento: string;
+  fecha: string;
+  codigo: string;
+  carpetaDriveId: string;
+}
+
+async function leerClientes(): Promise<{ clientes: Cliente[] }> {
   try {
-    const data = await fs.readFile(CLIENTES_FILE, "utf-8");
-    return JSON.parse(data);
+    const { blobs } = await list({ prefix: BLOB_NAME });
+    if (blobs.length === 0) {
+      return { clientes: [] };
+    }
+    const res = await fetch(blobs[0].url);
+    const data = await res.json();
+    return data;
   } catch {
     return { clientes: [] };
   }
 }
 
-async function guardarClientes(data: { clientes: unknown[] }) {
-  await fs.writeFile(CLIENTES_FILE, JSON.stringify(data, null, 2), "utf-8");
+async function guardarClientes(data: { clientes: Cliente[] }) {
+  await put(BLOB_NAME, JSON.stringify(data, null, 2), {
+    access: "public",
+    addRandomSuffix: false,
+  });
 }
 
 // DELETE - Eliminar un cliente
@@ -26,10 +42,7 @@ export async function DELETE(
     const { slug } = await params;
     const data = await leerClientes();
 
-    data.clientes = data.clientes.filter(
-      (c: { slug: string }) => c.slug !== slug
-    );
-
+    data.clientes = data.clientes.filter((c) => c.slug !== slug);
     await guardarClientes(data);
 
     return NextResponse.json({ success: true });
