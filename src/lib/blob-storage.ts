@@ -1,4 +1,4 @@
-import { put, list, head } from "@vercel/blob";
+import { put, list } from "@vercel/blob";
 
 const BLOB_NAME = "clientes.json";
 
@@ -18,16 +18,17 @@ export async function leerClientes(): Promise<{ clientes: Cliente[] }> {
       return { clientes: [] };
     }
 
-    // Usar head para obtener la downloadUrl firmada del SDK
-    const blobMeta = await head(blobs[0].url);
+    const token = process.env.BLOB_READ_WRITE_TOKEN;
     
-    // downloadUrl es una URL firmada que no requiere token adicional
-    const res = await fetch(blobMeta.downloadUrl);
+    // Para blobs privados, descargar usando el token en el header
+    const res = await fetch(blobs[0].url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     if (!res.ok) {
-      // Si downloadUrl no funciona, intentar con la URL del blob directamente
-      // ya que el SDK debería estar autenticado
-      console.error("Error con downloadUrl:", res.status);
+      console.error("Error descargando blob:", res.status, res.statusText);
       return { clientes: [] };
     }
 
