@@ -157,18 +157,17 @@ export default function Footer() {
             <h4 className="text-sm text-white tracking-wide uppercase mb-6">
               Ubicación
             </h4>
-            <div className="aspect-square w-full max-w-[200px] border border-white/10 overflow-hidden">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.5!2d-98.2063!3d19.0414!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85cfc0e81b4a30e9%3A0x6deaborbe7b2e55aa!2sPuebla%2C%20Mexico!5e0!3m2!1ses!2smx!4v1"
-                width="100%"
-                height="100%"
-                style={{ border: 0, filter: "grayscale(100%) invert(90%)" }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Ubicación ROCA Studio"
-              />
-            </div>
+            <a
+              href="https://maps.app.goo.gl/pQ3h4c6eYZryBzck8"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full max-w-[200px] aspect-square border border-white/10 bg-[#111] flex items-center justify-center group hover:border-white/30 transition-all duration-300"
+            >
+              <div className="text-center">
+                <MapPin size={24} className="text-white/30 group-hover:text-white/60 transition-colors mx-auto mb-2" />
+                <span className="text-xs text-white/30 group-hover:text-white/60 transition-colors">Ver ubicación</span>
+              </div>
+            </a>
           </div>
         </div>
 

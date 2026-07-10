@@ -26,6 +26,21 @@ export const metadata: Metadata = {
       "Capturamos momentos que vivirán para siempre. Fotografía profesional para bodas, XV años, eventos, retratos y más.",
     type: "website",
     locale: "es_MX",
+    images: [
+      {
+        url: "/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "ROCA Studio - Fotografía Profesional",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ROCA Studio | Fotografía Profesional",
+    description:
+      "Capturamos momentos que vivirán para siempre. Fotografía profesional para bodas, XV años, eventos, retratos y más.",
+    images: ["/logo.png"],
   },
 };
 
