@@ -31,24 +31,20 @@ export async function GET(
     const { id } = await params;
     const drive = getGoogleDriveClient();
 
+    // Descargar archivo como arraybuffer
     const res = await drive.files.get(
       { fileId: id, alt: "media" },
-      { responseType: "stream" }
+      { responseType: "arraybuffer" }
     );
 
     const contentType = res.headers["content-type"] || "image/jpeg";
-
-    // Convertir stream a buffer
-    const chunks: Buffer[] = [];
-    for await (const chunk of res.data as AsyncIterable<Buffer>) {
-      chunks.push(chunk);
-    }
-    const buffer = Buffer.concat(chunks);
+    const buffer = Buffer.from(res.data as ArrayBuffer);
 
     return new NextResponse(buffer, {
       headers: {
         "Content-Type": contentType,
-        "Cache-Control": "public, max-age=86400, immutable",
+        "Cache-Control": "public, max-age=86400, s-maxage=86400, immutable",
+        "Content-Length": buffer.length.toString(),
       },
     });
   } catch (error) {

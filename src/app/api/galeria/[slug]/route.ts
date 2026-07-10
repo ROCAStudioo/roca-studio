@@ -59,8 +59,8 @@ async function obtenerFotosDeCarpeta(folderId: string) {
   const fotos = (res.data.files || []).map((file) => ({
     id: file.id || "",
     nombre: file.name || "",
-    url: `/api/imagen/${file.id}`,
-    thumbnail: file.thumbnailLink?.replace("=s220", "=s600") || `https://lh3.googleusercontent.com/d/${file.id}=w600`,
+    url: file.thumbnailLink?.replace("=s220", "=s1600") || `/api/imagen/${file.id}`,
+    thumbnail: file.thumbnailLink?.replace("=s220", "=s600") || `/api/imagen/${file.id}`,
     downloadUrl: `/api/imagen/${file.id}`,
   }));
 
