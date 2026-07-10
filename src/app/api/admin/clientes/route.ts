@@ -60,8 +60,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true, cliente: nuevoCliente });
   } catch (error) {
     console.error("Error agregando cliente:", error);
+    const mensaje = error instanceof Error ? error.message : "Error desconocido";
     return NextResponse.json(
-      { error: "Error interno del servidor" },
+      { error: `Error interno: ${mensaje}` },
       { status: 500 }
     );
   }
