@@ -1,0 +1,207 @@
+====================================================
+  CONFIGURAR GOOGLE DRIVE PARA GALERÍAS DE CLIENTES
+  ROCA Studio
+====================================================
+
+Este módulo permite que cada cliente tenga su propia
+galería privada con fotos y videos almacenados en tu
+Google Drive de 5 TB.
+
+
+====================================================
+  PASO 1: CREAR PROYECTO EN GOOGLE CLOUD
+====================================================
+
+1. Ve a: https://console.cloud.google.com
+2. Inicia sesión con la cuenta que tiene los 5 TB
+3. Haz clic en "Seleccionar proyecto" (arriba)
+4. Haz clic en "NUEVO PROYECTO"
+5. Nombre: "ROCA Studio Web"
+6. Haz clic en "CREAR"
+7. Espera a que se cree y selecciónalo
+
+
+====================================================
+  PASO 2: ACTIVAR LA API DE GOOGLE DRIVE
+====================================================
+
+1. En el menú lateral ve a: APIs y servicios → Biblioteca
+2. Busca "Google Drive API"
+3. Haz clic en ella
+4. Haz clic en "HABILITAR"
+
+
+====================================================
+  PASO 3: CREAR CUENTA DE SERVICIO
+====================================================
+
+Esta es una "cuenta robot" que tu sitio web usará
+para acceder a las carpetas de Drive.
+
+1. Ve a: APIs y servicios → Credenciales
+2. Haz clic en "CREAR CREDENCIALES"
+3. Selecciona "Cuenta de servicio"
+4. Nombre: "roca-studio-web"
+5. Haz clic en "CREAR Y CONTINUAR"
+6. En "Rol" selecciona: Ninguno (skip)
+7. Haz clic en "LISTO"
+
+Ahora genera la clave:
+1. Haz clic en la cuenta de servicio que creaste
+2. Ve a la pestaña "CLAVES"
+3. Haz clic en "AGREGAR CLAVE" → "Crear clave nueva"
+4. Selecciona "JSON"
+5. Haz clic en "CREAR"
+6. Se descargará un archivo JSON. ¡Guárdalo bien!
+
+
+====================================================
+  PASO 4: CONFIGURAR LAS VARIABLES DE ENTORNO
+====================================================
+
+Abre el archivo JSON que descargaste. Busca estos valores:
+- "client_email": algo como "roca-studio-web@proyecto.iam.gserviceaccount.com"
+- "private_key": una clave larga que empieza con "-----BEGIN PRIVATE KEY-----"
+
+Ahora abre el archivo .env.local en tu proyecto y reemplaza:
+
+GOOGLE_CLIENT_EMAIL=pega-aqui-el-client_email
+GOOGLE_PRIVATE_KEY="pega-aqui-la-private_key-completa"
+
+IMPORTANTE: La private_key debe ir entre comillas dobles
+y debe incluir los \n tal cual están en el JSON.
+
+
+====================================================
+  PASO 5: COMPARTIR CARPETAS CON LA CUENTA DE SERVICIO
+====================================================
+
+Este es el paso más importante. Tu cuenta de servicio
+necesita acceso a las carpetas de Drive.
+
+1. Ve a Google Drive (drive.google.com)
+2. Crea una carpeta principal, ejemplo: "Clientes ROCA"
+3. Dentro crea una carpeta por cliente, ejemplo:
+   "Clientes ROCA/Ana y Carlos - Boda 2026"
+4. Dentro de esa carpeta crea subcarpetas:
+   - "Sesión previa"
+   - "Evento"
+   - "Sesión posterior"
+5. Sube las fotos a cada subcarpeta
+6. Haz clic derecho en la carpeta del cliente →
+   "Compartir" → pega el email de la cuenta de servicio
+   (el client_email del paso 4)
+7. Dale permiso de "Lector"
+
+Repite el paso 6 para cada carpeta de cliente nueva.
+
+
+====================================================
+  PASO 6: OBTENER EL ID DE LA CARPETA
+====================================================
+
+El ID de la carpeta es lo que aparece en la URL
+cuando abres una carpeta en Drive:
+
+https://drive.google.com/drive/folders/1AbC2dEfG3hIjKlMnOpQrS
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^
+                                        ESTE es el ID
+
+Copia ese ID y úsalo cuando crees la galería del
+cliente en el panel de administración.
+
+
+====================================================
+  PASO 7: CONFIGURAR EN VERCEL
+====================================================
+
+Las variables de entorno (.env.local) solo funcionan
+en local. Para que funcionen en producción (Vercel):
+
+1. Ve a vercel.com → tu proyecto → Settings → Environment Variables
+2. Agrega cada variable:
+   - GOOGLE_CLIENT_EMAIL = tu email de service account
+   - GOOGLE_PRIVATE_KEY = tu private key completa
+   - NEXT_PUBLIC_ADMIN_PASSWORD = tu contraseña de admin
+3. Haz clic en "Save" para cada una
+4. Vuelve a hacer deploy (o haz un push a GitHub)
+
+
+====================================================
+  CÓMO USAR EL SISTEMA
+====================================================
+
+1. SUBIR FOTOS:
+   - Simplemente sube las fotos a la carpeta del
+     cliente en Google Drive como siempre
+
+2. CREAR GALERÍA PARA UN CLIENTE:
+   - Ve a: tudominio.com/admin
+   - Ingresa tu contraseña de administrador
+   - Llena el formulario:
+     · Nombre: "Ana & Carlos"
+     · Evento: "Boda"
+     · Fecha: "15 de Marzo, 2026"
+     · ID de carpeta: (el ID de la carpeta en Drive)
+   - Haz clic en "Crear Galería"
+   - Se generará automáticamente:
+     · URL: tudominio.com/galeria/ana-carlos-boda-2026
+     · Código de acceso: ROCA + 6 caracteres aleatorios
+
+3. ENVIAR AL CLIENTE:
+   - Copia el link y el código
+   - Mándaselo por WhatsApp o correo
+   - Ejemplo: "Hola Ana, tus fotos están listas.
+     Entra a: rocastudio.com/galeria/ana-carlos-boda-2026
+     Tu código de acceso es: ROCAAB3X7K"
+
+4. EL CLIENTE:
+   - Entra al link
+   - Pone su código
+   - Ve su galería organizada por secciones
+   - Puede descargar fotos individuales o todas
+
+
+====================================================
+  ESTRUCTURA DE CARPETAS EN DRIVE (RECOMENDADA)
+====================================================
+
+Google Drive/
+└── Clientes ROCA/
+    ├── Ana y Carlos - Boda 2026/
+    │   ├── Sesión previa/
+    │   │   ├── foto001.jpg
+    │   │   ├── foto002.jpg
+    │   │   └── ...
+    │   ├── Evento/
+    │   │   ├── foto001.jpg
+    │   │   └── ...
+    │   └── Sesión posterior/
+    │       ├── foto001.jpg
+    │       └── ...
+    │
+    ├── Valentina - XV Años 2026/
+    │   ├── Sesión previa/
+    │   ├── Evento/
+    │   └── Sesión posterior/
+    │
+    └── ...
+
+Si no creas subcarpetas, todas las fotos se mostrarán
+en una sola sección llamada "Todas las fotos".
+
+
+====================================================
+  NOTAS IMPORTANTES
+====================================================
+
+• Las fotos se sirven directamente desde Google Drive
+  (no se copian a ningún otro lugar)
+• El archivo .env.local NUNCA se sube a GitHub (está en .gitignore)
+• Cada vez que agregues un cliente nuevo, recuerda
+  compartir su carpeta con la cuenta de servicio
+• Los videos grandes (>25 MB) pueden tardar en cargar
+  desde Drive. Para videos es mejor subirlos a YouTube
+  como "No listado" e incrustarlos
+• El código de acceso se genera automáticamente pero
+  puedes cambiarlo manualmente en src/data/clientes.json

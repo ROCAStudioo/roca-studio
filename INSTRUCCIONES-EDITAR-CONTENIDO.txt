@@ -1,0 +1,255 @@
+====================================================
+  CÓMO EDITAR EL CONTENIDO DE TU LANDING PAGE
+  ROCA Studio
+====================================================
+
+Tu proyecto está organizado por componentes.
+Cada sección de la página es un archivo independiente
+dentro de la carpeta: src/components/
+
+Solo necesitas abrir el archivo correspondiente, cambiar
+el texto o las imágenes, guardar y subir los cambios.
+
+
+====================================================
+  ESTRUCTURA DE ARCHIVOS
+====================================================
+
+Sección                  → Archivo
+─────────────────────────────────────────────────────
+Navegación               → src/components/Navbar.tsx
+Hero principal           → src/components/Hero.tsx
+Servicios                → src/components/Servicios.tsx
+Portafolio               → src/components/Portafolio.tsx
+¿Por qué elegirnos?     → src/components/PorQueElegirnos.tsx
+Estadísticas             → src/components/Estadisticas.tsx
+Testimonios              → src/components/Testimonios.tsx
+Nuestro Proceso          → src/components/NuestroProceso.tsx
+Galería de Video         → src/components/GaleriaVideo.tsx
+Preguntas Frecuentes     → src/components/PreguntasFrecuentes.tsx
+CTA Final                → src/components/CTAFinal.tsx
+Formulario de contacto   → src/components/Formulario.tsx
+Pie de página            → src/components/Footer.tsx
+Botón WhatsApp           → src/components/WhatsAppButton.tsx
+SEO y metadatos          → src/app/layout.tsx
+
+
+====================================================
+  EJEMPLOS PRÁCTICOS
+====================================================
+
+────────────────────────────────────────────────────
+1. CAMBIAR EL TÍTULO DEL HERO
+────────────────────────────────────────────────────
+
+Abre: src/components/Hero.tsx
+Busca el texto:
+  "Capturamos momentos que vivirán para siempre"
+Cámbialo por el que quieras.
+
+
+────────────────────────────────────────────────────
+2. CAMBIAR LAS FOTOS
+────────────────────────────────────────────────────
+
+Las imágenes están como URLs de Unsplash. Para usar
+tus propias fotos tienes dos opciones:
+
+OPCIÓN A — Imágenes locales:
+  1. Crea una carpeta: public/fotos/
+  2. Coloca tu foto ahí, por ejemplo: public/fotos/boda1.jpg
+  3. En el componente cambia la URL:
+
+     Antes:  "https://images.unsplash.com/photo-15197..."
+     Después: "/fotos/boda1.jpg"
+
+OPCIÓN B — Imágenes en otro servicio (Cloudinary, etc.):
+  Solo reemplaza la URL directamente por la nueva.
+
+
+────────────────────────────────────────────────────
+3. EDITAR LOS SERVICIOS
+────────────────────────────────────────────────────
+
+Abre: src/components/Servicios.tsx
+Verás un arreglo así:
+
+  const servicios = [
+    {
+      nombre: "Bodas",
+      descripcion: "Capturamos cada momento mágico...",
+      imagen: "https://...",
+    },
+    ...
+  ];
+
+Modifica nombre, descripcion o imagen de cada uno.
+Puedes agregar o quitar servicios del arreglo.
+
+
+────────────────────────────────────────────────────
+4. EDITAR TESTIMONIOS
+────────────────────────────────────────────────────
+
+Abre: src/components/Testimonios.tsx
+
+  const testimonios = [
+    {
+      nombre: "María García",
+      foto: "https://...",
+      opinion: "ROCA Studio capturó nuestra boda...",
+    },
+    ...
+  ];
+
+Cambia nombres, fotos y opiniones por las de tus
+clientes reales.
+
+
+────────────────────────────────────────────────────
+5. CAMBIAR EL NÚMERO DE WHATSAPP
+────────────────────────────────────────────────────
+
+Abre: src/components/WhatsAppButton.tsx
+Busca:
+  href="https://wa.me/525512345678?text=Hola..."
+
+Reemplaza 525512345678 con tu número real.
+Formato: código de país + número, sin espacios ni guiones.
+Ejemplo México: 521234567890
+
+
+────────────────────────────────────────────────────
+6. EDITAR DATOS DE CONTACTO (FOOTER)
+────────────────────────────────────────────────────
+
+Abre: src/components/Footer.tsx
+Busca y reemplaza:
+  - Dirección: "Av. Principal #123, Col. Centro..."
+  - Teléfono: "+52 55 1234 5678"
+  - Correo: "info@rocastudio.com"
+  - Links de redes sociales (Facebook, Instagram, TikTok, YouTube)
+
+
+────────────────────────────────────────────────────
+7. CAMBIAR LAS ESTADÍSTICAS
+────────────────────────────────────────────────────
+
+Abre: src/components/Estadisticas.tsx
+
+  const stats = [
+    { numero: 500, sufijo: "+", label: "Sesiones realizadas" },
+    { numero: 300, sufijo: "+", label: "Eventos cubiertos" },
+    { numero: 100, sufijo: "%", label: "Clientes satisfechos" },
+    { numero: 10, sufijo: "+", label: "Años de experiencia" },
+  ];
+
+Cambia los números por los reales de tu estudio.
+
+
+────────────────────────────────────────────────────
+8. AGREGAR TUS VIDEOS REALES DE YOUTUBE
+────────────────────────────────────────────────────
+
+Abre: src/components/GaleriaVideo.tsx
+
+El videoId es lo que sale después de "watch?v=" en
+la URL de YouTube.
+
+Ejemplo:
+  URL: https://youtube.com/watch?v=ABC123
+  videoId: "ABC123"
+
+Reemplaza:
+  {
+    titulo: "Boda Ana & Carlos",
+    thumbnail: "/fotos/boda-thumbnail.jpg",
+    videoId: "TU_VIDEO_ID_REAL",
+  },
+
+
+────────────────────────────────────────────────────
+9. EDITAR PREGUNTAS FRECUENTES
+────────────────────────────────────────────────────
+
+Abre: src/components/PreguntasFrecuentes.tsx
+
+  const preguntas = [
+    {
+      pregunta: "¿Cuánto cuesta una sesión?",
+      respuesta: "Nuestros precios varían según...",
+    },
+    ...
+  ];
+
+Cambia las preguntas y respuestas por las tuyas.
+Puedes agregar o quitar preguntas.
+
+
+────────────────────────────────────────────────────
+10. CAMBIAR LOS METADATOS (SEO)
+────────────────────────────────────────────────────
+
+Abre: src/app/layout.tsx
+Busca el objeto "metadata" y cambia:
+  - title: Título que aparece en la pestaña del navegador
+  - description: Descripción para Google
+  - keywords: Palabras clave separadas por coma
+
+
+====================================================
+  CÓMO VER LOS CAMBIOS EN LOCAL
+====================================================
+
+Antes de publicar, puedes verificar cómo se ve.
+Abre la terminal en la carpeta del proyecto y ejecuta:
+
+  npm run dev
+
+Se abrirá en: http://localhost:3000
+Los cambios se reflejan en tiempo real mientras editas.
+Para detenerlo presiona Ctrl + C.
+
+
+====================================================
+  CÓMO SUBIR LOS CAMBIOS AL SITIO EN VIVO
+====================================================
+
+Cada vez que termines de editar, abre la terminal
+en la carpeta del proyecto y ejecuta estos 3 comandos:
+
+  git add .
+  git commit -m "Descripción de lo que cambiaste"
+  git push
+
+Vercel detectará los cambios automáticamente y en
+aproximadamente 1 minuto tu sitio estará actualizado.
+
+Ejemplo:
+  git add .
+  git commit -m "Actualicé fotos y testimonios"
+  git push
+
+
+====================================================
+  TIPS IMPORTANTES
+====================================================
+
+• No borres las comillas ("") al cambiar textos.
+• Las imágenes locales van siempre en la carpeta public/
+• Para URLs de fotos usa imágenes de buena calidad
+  (mínimo 1200px de ancho para que se vean bien).
+• Si algo se rompe, puedes deshacer con:
+    git checkout .
+  Esto revierte todos los cambios no guardados.
+• Tu repositorio en GitHub:
+  https://github.com/ROCAStudioo/roca-studio
+
+
+====================================================
+  ¿NECESITAS AYUDA?
+====================================================
+
+Si tienes dudas sobre cómo editar algo específico,
+puedes abrir el proyecto en Kiro y pedirme que haga
+los cambios por ti.
