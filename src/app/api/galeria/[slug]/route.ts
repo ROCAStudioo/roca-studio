@@ -6,12 +6,25 @@ import { leerClientes, Cliente } from "@/lib/blob-storage";
 function getGoogleDriveClient() {
   let privateKey = process.env.GOOGLE_PRIVATE_KEY || "";
   
-  // Manejar diferentes formatos de la private key
-  // 1. Si viene con comillas envolventes, quitarlas
+  // Si pegaron todo el JSON de credenciales, extraer solo la private_key
+  if (privateKey.includes('"private_key"')) {
+    try {
+      const parsed = JSON.parse(privateKey);
+      privateKey = parsed.private_key;
+    } catch {
+      // No es JSON válido, continuar con procesamiento normal
+    }
+  }
+  
+  // Quitar comillas envolventes si las tiene
   if (privateKey.startsWith('"') && privateKey.endsWith('"')) {
     privateKey = privateKey.slice(1, -1);
   }
-  // 2. Reemplazar \n literales por saltos de línea reales
+  if (privateKey.startsWith("'") && privateKey.endsWith("'")) {
+    privateKey = privateKey.slice(1, -1);
+  }
+  
+  // Reemplazar \n literales por saltos de línea reales
   privateKey = privateKey.replace(/\\n/g, "\n");
   
   const auth = new google.auth.GoogleAuth({
