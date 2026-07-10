@@ -9,6 +9,7 @@ const categorias = [
   "Todos",
   "Bodas",
   "XV Años",
+  "Newborn",
 ];
 
 const fotos = [
@@ -95,6 +96,17 @@ const fotos = [
   { src: "/fotos/xv/foto33.jpg", categoria: "XV Años", alt: "Sesión XV años" },
   { src: "/fotos/xv/foto34.jpeg", categoria: "XV Años", alt: "Sesión XV años" },
   { src: "/fotos/xv/foto35.jpg", categoria: "XV Años", alt: "Sesión XV años" },
+  { src: "/fotos/newborn/foto1.jpg", categoria: "Newborn", alt: "Fotografía newborn" },
+  { src: "/fotos/newborn/foto2.jpg", categoria: "Newborn", alt: "Fotografía newborn" },
+  { src: "/fotos/newborn/foto3.jpg", categoria: "Newborn", alt: "Fotografía newborn" },
+  { src: "/fotos/newborn/foto4.jpg", categoria: "Newborn", alt: "Fotografía newborn" },
+  { src: "/fotos/newborn/foto5.jpg", categoria: "Newborn", alt: "Fotografía newborn" },
+  { src: "/fotos/newborn/foto6.jpg", categoria: "Newborn", alt: "Fotografía newborn" },
+  { src: "/fotos/newborn/foto7.jpg", categoria: "Newborn", alt: "Fotografía newborn" },
+  { src: "/fotos/newborn/foto8.jpg", categoria: "Newborn", alt: "Fotografía newborn" },
+  { src: "/fotos/newborn/foto9.jpg", categoria: "Newborn", alt: "Fotografía newborn" },
+  { src: "/fotos/newborn/foto10.jpg", categoria: "Newborn", alt: "Fotografía newborn" },
+  { src: "/fotos/newborn/foto11.jpg", categoria: "Newborn", alt: "Fotografía newborn" },
 ];
 
 export default function Portafolio() {

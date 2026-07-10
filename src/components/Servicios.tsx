@@ -19,7 +19,7 @@ const servicios = [
     nombre: "Newborn",
     descripcion:
       "Retratos tiernos y delicados de los primeros días de vida de tu bebé.",
-    imagen: "/fotos/new born/foto1.jpg",
+    imagen: "/fotos/newborn/foto1.jpg",
   },
   {
     nombre: "Maternidad",
