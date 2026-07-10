@@ -1,17 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { google } from "googleapis";
-import { list, head } from "@vercel/blob";
-
-const BLOB_NAME = "clientes.json";
-
-interface Cliente {
-  slug: string;
-  nombre: string;
-  evento: string;
-  fecha: string;
-  codigo: string;
-  carpetaDriveId: string;
-}
+import { leerClientes, Cliente } from "@/lib/blob-storage";
 
 // Configuración de Google Drive API
 function getGoogleDriveClient() {
@@ -26,21 +15,11 @@ function getGoogleDriveClient() {
   return google.drive({ version: "v3", auth });
 }
 
-// Leer clientes desde Vercel Blob
+// Buscar cliente por slug
 async function obtenerCliente(slug: string): Promise<Cliente | null> {
-  try {
-    const { blobs } = await list({ prefix: BLOB_NAME });
-    if (blobs.length === 0) {
-      return null;
-    }
-    const blobHead = await head(blobs[0].url);
-    const res = await fetch(blobHead.downloadUrl);
-    const data = await res.json();
-    const cliente = data.clientes.find((c: Cliente) => c.slug === slug);
-    return cliente || null;
-  } catch {
-    return null;
-  }
+  const data = await leerClientes();
+  const cliente = data.clientes.find((c) => c.slug === slug);
+  return cliente || null;
 }
 
 // Obtener fotos de una carpeta de Google Drive
@@ -77,12 +56,10 @@ async function obtenerSecciones(carpetaPrincipalId: string) {
   const carpetas = res.data.files || [];
 
   if (carpetas.length === 0) {
-    // Si no hay subcarpetas, las fotos están directo en la carpeta principal
     const fotos = await obtenerFotosDeCarpeta(carpetaPrincipalId);
     return [{ nombre: "Todas las fotos", fotos }];
   }
 
-  // Obtener fotos de cada subcarpeta
   const secciones = await Promise.all(
     carpetas.map(async (carpeta) => {
       const fotos = await obtenerFotosDeCarpeta(carpeta.id || "");
@@ -114,10 +91,10 @@ export async function POST(
       );
     }
 
-    // Verificar código
-    if (cliente.codigo !== codigo) {
+    // Verificar código (comparación sin espacios extra)
+    if (cliente.codigo.trim() !== codigo.trim()) {
       return NextResponse.json(
-        { error: "Código incorrecto" },
+        { error: `Código incorrecto` },
         { status: 401 }
       );
     }
@@ -133,8 +110,9 @@ export async function POST(
     });
   } catch (error) {
     console.error("Error en API galería:", error);
+    const mensaje = error instanceof Error ? error.message : "Error desconocido";
     return NextResponse.json(
-      { error: "Error interno del servidor" },
+      { error: `Error: ${mensaje}` },
       { status: 500 }
     );
   }
