@@ -1,26 +1,18 @@
 import { NextResponse } from "next/server";
-import { list, getDownloadUrl } from "@vercel/blob";
+import { leerClientes } from "@/lib/blob-storage";
 
 export async function GET() {
   try {
-    const { blobs } = await list({ prefix: "clientes.json" });
-    
-    if (blobs.length === 0) {
-      return NextResponse.json({ 
-        status: "No hay blobs",
-        blobs: [] 
-      });
-    }
-
-    const downloadUrl = await getDownloadUrl(blobs[0].url);
-    const res = await fetch(downloadUrl);
-    const text = await res.text();
+    const data = await leerClientes();
 
     return NextResponse.json({
       status: "OK",
-      blobUrl: blobs[0].url,
-      blobSize: blobs[0].size,
-      contenido: JSON.parse(text),
+      totalClientes: data.clientes.length,
+      clientes: data.clientes.map((c) => ({
+        slug: c.slug,
+        nombre: c.nombre,
+        codigo: c.codigo,
+      })),
     });
   } catch (error) {
     return NextResponse.json({
