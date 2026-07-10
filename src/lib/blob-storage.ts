@@ -36,5 +36,6 @@ export async function guardarClientes(data: { clientes: Cliente[] }) {
   await put(BLOB_NAME, JSON.stringify(data, null, 2), {
     access: "private",
     addRandomSuffix: false,
+    allowOverwrite: true,
   });
 }
