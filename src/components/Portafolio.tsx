@@ -93,7 +93,7 @@ const fotos = [
   { src: "/fotos/xv/foto31.jpg", categoria: "XV Años", alt: "Sesión XV años" },
   { src: "/fotos/xv/foto32.jpg", categoria: "XV Años", alt: "Sesión XV años" },
   { src: "/fotos/xv/foto33.jpg", categoria: "XV Años", alt: "Sesión XV años" },
-  { src: "/fotos/xv/foto34.jpg", categoria: "XV Años", alt: "Sesión XV años" },
+  { src: "/fotos/xv/foto34.jpeg", categoria: "XV Años", alt: "Sesión XV años" },
   { src: "/fotos/xv/foto35.jpg", categoria: "XV Años", alt: "Sesión XV años" },
 ];
 
