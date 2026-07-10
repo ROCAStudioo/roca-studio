@@ -9,6 +9,7 @@ interface FotoCliente {
   nombre: string;
   url: string;
   thumbnail: string;
+  downloadUrl: string;
 }
 
 interface SeccionGaleria {
@@ -294,7 +295,7 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
 
             {/* Download button in lightbox */}
             <a
-              href={clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].url}
+              href={clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].downloadUrl}
               download
               onClick={(e) => e.stopPropagation()}
               className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-2 border border-white/30 text-white text-xs tracking-wide hover:bg-white hover:text-black transition-all duration-300"
