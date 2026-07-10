@@ -44,12 +44,13 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
         body: JSON.stringify({ codigo }),
       });
 
+      const data = await res.json();
+
       if (res.ok) {
-        const data = await res.json();
         setClienteData(data);
         setAutenticado(true);
       } else {
-        setError("Código incorrecto. Verifica e intenta de nuevo.");
+        setError(data.error || "Código incorrecto. Verifica e intenta de nuevo.");
       }
     } catch {
       setError("Error de conexión. Intenta de nuevo.");
