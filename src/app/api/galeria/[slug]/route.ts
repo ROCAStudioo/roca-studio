@@ -4,10 +4,20 @@ import { leerClientes, Cliente } from "@/lib/blob-storage";
 
 // Configuración de Google Drive API
 function getGoogleDriveClient() {
+  let privateKey = process.env.GOOGLE_PRIVATE_KEY || "";
+  
+  // Manejar diferentes formatos de la private key
+  // 1. Si viene con comillas envolventes, quitarlas
+  if (privateKey.startsWith('"') && privateKey.endsWith('"')) {
+    privateKey = privateKey.slice(1, -1);
+  }
+  // 2. Reemplazar \n literales por saltos de línea reales
+  privateKey = privateKey.replace(/\\n/g, "\n");
+  
   const auth = new google.auth.GoogleAuth({
     credentials: {
       client_email: process.env.GOOGLE_CLIENT_EMAIL,
-      private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+      private_key: privateKey,
     },
     scopes: ["https://www.googleapis.com/auth/drive.readonly"],
   });
