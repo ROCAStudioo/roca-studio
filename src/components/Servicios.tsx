@@ -7,22 +7,19 @@ const servicios = [
     nombre: "Bodas",
     descripcion:
       "Capturamos cada momento mágico de tu gran día con elegancia y emoción.",
-    imagen:
-      "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80",
+    imagen: "/fotos/boda/foto2.jpg",
   },
   {
     nombre: "XV Años",
     descripcion:
       "Fotografía artística para celebrar esta etapa única e irrepetible.",
-    imagen:
-      "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600&q=80",
+    imagen: "/fotos/xv/foto1.jpg",
   },
   {
     nombre: "Newborn",
     descripcion:
       "Retratos tiernos y delicados de los primeros días de vida de tu bebé.",
-    imagen:
-      "https://images.unsplash.com/photo-1544126592-807ade215a0b?w=600&q=80",
+    imagen: "/fotos/new born/foto1.jpg",
   },
   {
     nombre: "Maternidad",
