@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Plus, Trash2, Copy, ExternalLink, Lock } from "lucide-react";
+import { Plus, Trash2, Copy, ExternalLink, Lock, Loader2 } from "lucide-react";
 
 interface Cliente {
   slug: string;
@@ -24,10 +24,11 @@ export default function AdminPanel() {
     carpetaDriveId: "",
   });
   const [copiado, setCopiado] = useState("");
+  const [cargando, setCargando] = useState(false);
+  const [mensaje, setMensaje] = useState<{ tipo: "ok" | "error"; texto: string } | null>(null);
 
   const loginAdmin = (e: React.FormEvent) => {
     e.preventDefault();
-    // En producción usar variable de entorno
     if (adminPassword === process.env.NEXT_PUBLIC_ADMIN_PASSWORD || adminPassword === "admin123") {
       setAutenticado(true);
       cargarClientes();
@@ -39,7 +40,7 @@ export default function AdminPanel() {
       const res = await fetch("/api/admin/clientes");
       if (res.ok) {
         const data = await res.json();
-        setClientes(data.clientes);
+        setClientes(data.clientes || []);
       }
     } catch (error) {
       console.error("Error cargando clientes:", error);
@@ -66,6 +67,9 @@ export default function AdminPanel() {
 
   const agregarCliente = async (e: React.FormEvent) => {
     e.preventDefault();
+    setCargando(true);
+    setMensaje(null);
+
     const slug = generarSlug(nuevoCliente.nombre, nuevoCliente.evento);
     const codigo = generarCodigo();
 
@@ -88,9 +92,25 @@ export default function AdminPanel() {
       if (res.ok) {
         setClientes([...clientes, cliente]);
         setNuevoCliente({ nombre: "", evento: "", fecha: "", carpetaDriveId: "" });
+        setMensaje({
+          tipo: "ok",
+          texto: `✓ Galería creada. Link: /galeria/${slug} | Código: ${codigo}`,
+        });
+      } else {
+        const data = await res.json();
+        setMensaje({
+          tipo: "error",
+          texto: `Error: ${data.error || "No se pudo crear la galería"}`,
+        });
       }
     } catch (error) {
       console.error("Error agregando cliente:", error);
+      setMensaje({
+        tipo: "error",
+        texto: `Error de conexión: ${error instanceof Error ? error.message : "Intenta de nuevo"}`,
+      });
+    } finally {
+      setCargando(false);
     }
   };
 
@@ -254,13 +274,25 @@ export default function AdminPanel() {
               />
             </div>
 
-            <div className="md:col-span-2">
+            <div className="md:col-span-2 space-y-3">
               <button
                 type="submit"
-                className="px-6 py-2.5 bg-white text-black text-sm tracking-widest uppercase hover:bg-white/90 transition-colors"
+                disabled={cargando}
+                className="px-6 py-2.5 bg-white text-black text-sm tracking-widest uppercase hover:bg-white/90 transition-colors disabled:opacity-50 flex items-center gap-2"
               >
-                Crear Galería
+                {cargando && <Loader2 size={14} className="animate-spin" />}
+                {cargando ? "Creando..." : "Crear Galería"}
               </button>
+
+              {mensaje && (
+                <p
+                  className={`text-sm ${
+                    mensaje.tipo === "ok" ? "text-green-400" : "text-red-400"
+                  }`}
+                >
+                  {mensaje.texto}
+                </p>
+              )}
             </div>
           </form>
         </motion.div>
