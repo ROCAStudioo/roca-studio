@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { google } from "googleapis";
-import { list } from "@vercel/blob";
+import { list, head } from "@vercel/blob";
 
 const BLOB_NAME = "clientes.json";
 
@@ -33,7 +33,8 @@ async function obtenerCliente(slug: string): Promise<Cliente | null> {
     if (blobs.length === 0) {
       return null;
     }
-    const res = await fetch(blobs[0].url);
+    const blobHead = await head(blobs[0].url);
+    const res = await fetch(blobHead.downloadUrl);
     const data = await res.json();
     const cliente = data.clientes.find((c: Cliente) => c.slug === slug);
     return cliente || null;

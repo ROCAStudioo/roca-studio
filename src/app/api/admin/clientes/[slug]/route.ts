@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { put, list } from "@vercel/blob";
+import { put, list, head } from "@vercel/blob";
 
 const BLOB_NAME = "clientes.json";
 
@@ -18,7 +18,9 @@ async function leerClientes(): Promise<{ clientes: Cliente[] }> {
     if (blobs.length === 0) {
       return { clientes: [] };
     }
-    const res = await fetch(blobs[0].url);
+    const blobUrl = blobs[0].url;
+    const blobHead = await head(blobUrl);
+    const res = await fetch(blobHead.downloadUrl);
     const data = await res.json();
     return data;
   } catch {
@@ -28,7 +30,7 @@ async function leerClientes(): Promise<{ clientes: Cliente[] }> {
 
 async function guardarClientes(data: { clientes: Cliente[] }) {
   await put(BLOB_NAME, JSON.stringify(data, null, 2), {
-    access: "public",
+    access: "private",
     addRandomSuffix: false,
   });
 }
