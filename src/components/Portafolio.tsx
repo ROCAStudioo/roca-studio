@@ -12,6 +12,7 @@ const categorias = [
   "Newborn",
   "Maternidad",
   "Comercial",
+  "Retratos",
 ];
 
 const fotos = [
@@ -128,6 +129,14 @@ const fotos = [
   { src: "/fotos/comercial/foto10.jpg", categoria: "Comercial", alt: "Fotografía comercial" },
   { src: "/fotos/comercial/foto11.jpg", categoria: "Comercial", alt: "Fotografía comercial" },
   { src: "/fotos/comercial/foto12.jpg", categoria: "Comercial", alt: "Fotografía comercial" },
+  { src: "/fotos/retrato/foto1.jpg", categoria: "Retratos", alt: "Retrato profesional" },
+  { src: "/fotos/retrato/foto2.jpg", categoria: "Retratos", alt: "Retrato profesional" },
+  { src: "/fotos/retrato/foto3.jpg", categoria: "Retratos", alt: "Retrato profesional" },
+  { src: "/fotos/retrato/foto4.jpg", categoria: "Retratos", alt: "Retrato profesional" },
+  { src: "/fotos/retrato/foto5.jpg", categoria: "Retratos", alt: "Retrato profesional" },
+  { src: "/fotos/retrato/foto6.jpg", categoria: "Retratos", alt: "Retrato profesional" },
+  { src: "/fotos/retrato/foto7.jpg", categoria: "Retratos", alt: "Retrato profesional" },
+  { src: "/fotos/retrato/foto8.jpg", categoria: "Retratos", alt: "Retrato profesional" },
 ];
 
 export default function Portafolio() {

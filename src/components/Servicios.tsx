@@ -33,6 +33,12 @@ const servicios = [
       "Contenido visual profesional que potencia tu negocio y marca.",
     imagen: "/fotos/comercial/foto1.jpg",
   },
+  {
+    nombre: "Retrato profesional",
+    descripcion:
+      "Imágenes impactantes para tu marca personal o portafolio.",
+    imagen: "/fotos/retrato/foto1.jpg",
+  },
 ];
 
 export default function Servicios() {
