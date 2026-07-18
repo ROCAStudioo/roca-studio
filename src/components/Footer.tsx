@@ -14,12 +14,7 @@ export default function Footer() {
           {/* Logo & Description */}
           <div className="lg:col-span-1">
             <div className="flex items-center mb-4">
-              <span className="text-2xl font-bold tracking-wider text-white font-[var(--font-heading)]">
-                ROCA
-              </span>
-              <span className="text-sm text-white/70 ml-2 tracking-widest uppercase">
-                Studio
-              </span>
+              <img src="/logo.png" alt="ROCA Studio" className="h-10" />
             </div>
             <p className="text-sm text-white/40 leading-relaxed mb-6">
               Estudio profesional de fotografía y video. Capturamos momentos que

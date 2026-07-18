@@ -72,12 +72,7 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
         >
           {/* Logo */}
           <div className="mb-10">
-            <span className="text-3xl font-bold tracking-wider text-white font-[var(--font-heading)]">
-              ROCA
-            </span>
-            <span className="text-sm text-white/70 ml-2 tracking-widest uppercase">
-              Studio
-            </span>
+            <img src="/logo.png" alt="ROCA Studio" className="h-12 mx-auto" />
           </div>
 
           <div className="border border-white/10 p-8 md:p-10">
@@ -141,12 +136,7 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
       <header className="border-b border-white/5 py-6 px-6">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div>
-            <span className="text-xl font-bold tracking-wider text-white font-[var(--font-heading)]">
-              ROCA
-            </span>
-            <span className="text-xs text-white/70 ml-2 tracking-widest uppercase">
-              Studio
-            </span>
+            <img src="/logo.png" alt="ROCA Studio" className="h-8" />
           </div>
           <div className="text-right">
             <p className="text-white text-sm">{clienteData?.nombre}</p>

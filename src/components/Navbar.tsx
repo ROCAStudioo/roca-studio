@@ -41,12 +41,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <a href="#inicio" className="flex items-center">
-            <span className="text-2xl font-bold tracking-wider text-white font-[var(--font-heading)]">
-              ROCA
-            </span>
-            <span className="text-sm text-white/70 ml-2 tracking-widest uppercase">
-              Studio
-            </span>
+            <img src="/logo.png" alt="ROCA Studio" className="h-10" />
           </a>
 
           {/* Desktop Navigation */}
