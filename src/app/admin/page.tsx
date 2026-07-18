@@ -47,13 +47,16 @@ export default function AdminPanel() {
     }
   };
 
-  const generarSlug = (nombre: string, evento: string) => {
-    return `${nombre}-${evento}-${new Date().getFullYear()}`
+  const generarSlug = (nombre: string) => {
+    const base = nombre
       .toLowerCase()
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
+    // Agregar 4 caracteres aleatorios para evitar duplicados
+    const id = Math.random().toString(36).substring(2, 6);
+    return `${base}-${id}`;
   };
 
   const generarCodigo = () => {
@@ -70,7 +73,7 @@ export default function AdminPanel() {
     setCargando(true);
     setMensaje(null);
 
-    const slug = generarSlug(nuevoCliente.nombre, nuevoCliente.evento);
+    const slug = generarSlug(nuevoCliente.nombre);
     const codigo = generarCodigo();
 
     const cliente: Cliente = {
