@@ -141,10 +141,8 @@ export default function AdminPanel() {
           className="w-full max-w-sm text-center"
         >
           <div className="mb-8">
-            <span className="text-2xl font-bold tracking-wider text-white font-[var(--font-heading)]">
-              ROCA
-            </span>
-            <span className="text-sm text-white/70 ml-2 tracking-widest uppercase">
+            <img src="/logo.png" alt="ROCA Studio" className="h-10 mx-auto" />
+            <span className="text-sm text-white/70 tracking-widest uppercase block mt-2">
               Admin
             </span>
           </div>
@@ -178,10 +176,8 @@ export default function AdminPanel() {
       <header className="border-b border-white/5 py-6 px-6">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div>
-            <span className="text-xl font-bold tracking-wider text-white font-[var(--font-heading)]">
-              ROCA
-            </span>
-            <span className="text-xs text-white/70 ml-2 tracking-widest uppercase">
+            <img src="/logo.png" alt="ROCA Studio" className="h-8 inline-block" />
+            <span className="text-xs text-white/70 ml-3 tracking-widest uppercase">
               Panel de Administración
             </span>
           </div>
