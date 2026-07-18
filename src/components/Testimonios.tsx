@@ -71,14 +71,6 @@ export default function Testimonios() {
               transition={{ duration: 0.5 }}
               className="text-center"
             >
-              <div className="flex justify-center mb-6">
-                <img
-                  src={testimonios[actual].foto}
-                  alt={testimonios[actual].nombre}
-                  className="w-16 h-16 rounded-full object-cover border-2 border-white/20"
-                />
-              </div>
-
               <div className="flex justify-center gap-1 mb-6">
                 {[...Array(5)].map((_, i) => (
                   <Star
