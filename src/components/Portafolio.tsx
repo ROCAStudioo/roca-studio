@@ -11,6 +11,7 @@ const categorias = [
   "XV Años",
   "Newborn",
   "Maternidad",
+  "Comercial",
 ];
 
 const fotos = [
@@ -115,6 +116,18 @@ const fotos = [
   { src: "/fotos/maternidad/foto5.jpg", categoria: "Maternidad", alt: "Sesión maternidad" },
   { src: "/fotos/maternidad/foto6.jpg", categoria: "Maternidad", alt: "Sesión maternidad" },
   { src: "/fotos/maternidad/foto7.jpg", categoria: "Maternidad", alt: "Sesión maternidad" },
+  { src: "/fotos/comercial/foto1.jpg", categoria: "Comercial", alt: "Fotografía comercial" },
+  { src: "/fotos/comercial/foto2.jpg", categoria: "Comercial", alt: "Fotografía comercial" },
+  { src: "/fotos/comercial/foto3.jpg", categoria: "Comercial", alt: "Fotografía comercial" },
+  { src: "/fotos/comercial/foto4.jpg", categoria: "Comercial", alt: "Fotografía comercial" },
+  { src: "/fotos/comercial/foto5.jpg", categoria: "Comercial", alt: "Fotografía comercial" },
+  { src: "/fotos/comercial/foto6.jpg", categoria: "Comercial", alt: "Fotografía comercial" },
+  { src: "/fotos/comercial/foto7.jpg", categoria: "Comercial", alt: "Fotografía comercial" },
+  { src: "/fotos/comercial/foto8.jpg", categoria: "Comercial", alt: "Fotografía comercial" },
+  { src: "/fotos/comercial/foto9.jpg", categoria: "Comercial", alt: "Fotografía comercial" },
+  { src: "/fotos/comercial/foto10.jpg", categoria: "Comercial", alt: "Fotografía comercial" },
+  { src: "/fotos/comercial/foto11.jpg", categoria: "Comercial", alt: "Fotografía comercial" },
+  { src: "/fotos/comercial/foto12.jpg", categoria: "Comercial", alt: "Fotografía comercial" },
 ];
 
 export default function Portafolio() {

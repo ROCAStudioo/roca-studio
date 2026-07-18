@@ -27,6 +27,12 @@ const servicios = [
       "Sesiones que celebran la belleza y la espera de una nueva vida.",
     imagen: "/fotos/maternidad/foto1.jpg",
   },
+  {
+    nombre: "Fotografía comercial",
+    descripcion:
+      "Contenido visual profesional que potencia tu negocio y marca.",
+    imagen: "/fotos/comercial/foto1.jpg",
+  },
 ];
 
 export default function Servicios() {
