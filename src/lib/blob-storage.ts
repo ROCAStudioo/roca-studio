@@ -25,6 +25,7 @@ export async function leerClientes(): Promise<{ clientes: Cliente[] }> {
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      cache: "no-store",
     });
 
     if (!res.ok) {
