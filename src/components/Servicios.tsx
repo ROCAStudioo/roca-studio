@@ -25,8 +25,7 @@ const servicios = [
     nombre: "Maternidad",
     descripcion:
       "Sesiones que celebran la belleza y la espera de una nueva vida.",
-    imagen:
-      "https://images.unsplash.com/photo-1493894473891-10fc1e5dbd22?w=600&q=80",
+    imagen: "/fotos/maternidad/foto1.jpg",
   },
 ];
 

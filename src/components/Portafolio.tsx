@@ -10,6 +10,7 @@ const categorias = [
   "Bodas",
   "XV Años",
   "Newborn",
+  "Maternidad",
 ];
 
 const fotos = [
@@ -107,6 +108,13 @@ const fotos = [
   { src: "/fotos/newborn/foto9.jpg", categoria: "Newborn", alt: "Fotografía newborn" },
   { src: "/fotos/newborn/foto10.jpg", categoria: "Newborn", alt: "Fotografía newborn" },
   { src: "/fotos/newborn/foto11.jpg", categoria: "Newborn", alt: "Fotografía newborn" },
+  { src: "/fotos/maternidad/foto1.jpg", categoria: "Maternidad", alt: "Sesión maternidad" },
+  { src: "/fotos/maternidad/foto2.jpg", categoria: "Maternidad", alt: "Sesión maternidad" },
+  { src: "/fotos/maternidad/foto3.jpg", categoria: "Maternidad", alt: "Sesión maternidad" },
+  { src: "/fotos/maternidad/foto4.jpg", categoria: "Maternidad", alt: "Sesión maternidad" },
+  { src: "/fotos/maternidad/foto5.jpg", categoria: "Maternidad", alt: "Sesión maternidad" },
+  { src: "/fotos/maternidad/foto6.jpg", categoria: "Maternidad", alt: "Sesión maternidad" },
+  { src: "/fotos/maternidad/foto7.jpg", categoria: "Maternidad", alt: "Sesión maternidad" },
 ];
 
 export default function Portafolio() {
