@@ -28,48 +28,6 @@ const servicios = [
     imagen:
       "https://images.unsplash.com/photo-1493894473891-10fc1e5dbd22?w=600&q=80",
   },
-  {
-    nombre: "Sesiones familiares",
-    descripcion:
-      "Momentos auténticos en familia que atesorarás por siempre.",
-    imagen:
-      "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=600&q=80",
-  },
-  {
-    nombre: "Retrato profesional",
-    descripcion:
-      "Imágenes impactantes para tu marca personal o portafolio.",
-    imagen:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80",
-  },
-  {
-    nombre: "Fotografía comercial",
-    descripcion:
-      "Contenido visual profesional que potencia tu negocio y marca.",
-    imagen:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&q=80",
-  },
-  {
-    nombre: "Cobertura de eventos",
-    descripcion:
-      "Documentamos cada detalle de tus eventos corporativos y sociales.",
-    imagen:
-      "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80",
-  },
-  {
-    nombre: "Video profesional",
-    descripcion:
-      "Producción audiovisual cinematográfica para cualquier ocasión.",
-    imagen:
-      "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=600&q=80",
-  },
-  {
-    nombre: "Dron",
-    descripcion:
-      "Tomas aéreas espectaculares que añaden una perspectiva única.",
-    imagen:
-      "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=600&q=80",
-  },
 ];
 
 export default function Servicios() {

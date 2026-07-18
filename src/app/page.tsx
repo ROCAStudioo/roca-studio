@@ -6,7 +6,6 @@ import PorQueElegirnos from "@/components/PorQueElegirnos";
 import Estadisticas from "@/components/Estadisticas";
 import Testimonios from "@/components/Testimonios";
 import NuestroProceso from "@/components/NuestroProceso";
-import GaleriaVideo from "@/components/GaleriaVideo";
 import PreguntasFrecuentes from "@/components/PreguntasFrecuentes";
 import CTAFinal from "@/components/CTAFinal";
 import Formulario from "@/components/Formulario";
@@ -24,7 +23,6 @@ export default function Home() {
       <Estadisticas />
       <Testimonios />
       <NuestroProceso />
-      <GaleriaVideo />
       <PreguntasFrecuentes />
       <CTAFinal />
       <Formulario />
