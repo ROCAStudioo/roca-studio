@@ -10,7 +10,7 @@ export default function CTAFinal() {
         className="absolute inset-0 bg-cover bg-center bg-fixed"
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=1920&q=80')",
+            "url('/fotos/cta.jpg')",
         }}
       />
 
