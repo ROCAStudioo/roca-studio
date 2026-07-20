@@ -10,7 +10,7 @@ export default function CTAFinal() {
         className="absolute inset-0 bg-cover bg-center bg-fixed"
         style={{
           backgroundImage:
-            "url('/fotos/cta.jpg')",
+            "url('/fotos/ROC05200-Editar.jpg')",
         }}
       />
 
