@@ -208,6 +208,9 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
                     className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   />
                 </div>
+                <div className="bg-black/80 px-2 py-1.5">
+                  <p className="text-xs text-white/60 truncate">{foto.nombre}</p>
+                </div>
               </div>
             ))}
           </motion.div>
@@ -284,15 +287,17 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
             />
 
             {/* Download button in lightbox */}
-            <a
-              href={clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].downloadUrl}
-              download
-              onClick={(e) => e.stopPropagation()}
-              className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-2 border border-white/30 text-white text-xs tracking-wide hover:bg-white hover:text-black transition-all duration-300"
-            >
-              <Download size={14} />
-              Descargar
-            </a>
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2" onClick={(e) => e.stopPropagation()}>
+              <p className="text-white/70 text-sm">{clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].nombre}</p>
+              <a
+                href={clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].downloadUrl}
+                download
+                className="flex items-center gap-2 px-4 py-2 border border-white/30 text-white text-xs tracking-wide hover:bg-white hover:text-black transition-all duration-300"
+              >
+                <Download size={14} />
+                Descargar
+              </a>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
