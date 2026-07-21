@@ -45,20 +45,44 @@ async function obtenerCliente(slug: string): Promise<Cliente | null> {
   return cliente || null;
 }
 
-// Obtener fotos de una carpeta de Google Drive
+// Obtener fotos de una carpeta de Google Drive (con paginación)
 async function obtenerFotosDeCarpeta(folderId: string) {
   const drive = getGoogleDriveClient();
+  const allFiles: { id: string; name: string; thumbnailLink: string | null | undefined }[] = [];
+  let pageToken: string | undefined = undefined;
 
-  const res = await drive.files.list({
+  // Primera página
+  const firstPage = await drive.files.list({
     q: `'${folderId}' in parents and (mimeType contains 'image/') and trashed = false`,
-    fields: "files(id, name, mimeType, thumbnailLink, webContentLink)",
+    fields: "nextPageToken, files(id, name, thumbnailLink)",
     orderBy: "name",
     pageSize: 1000,
   });
 
-  const fotos = (res.data.files || []).map((file) => ({
-    id: file.id || "",
-    nombre: file.name || "",
+  for (const file of firstPage.data.files || []) {
+    allFiles.push({ id: file.id || "", name: file.name || "", thumbnailLink: file.thumbnailLink });
+  }
+  pageToken = firstPage.data.nextPageToken || undefined;
+
+  // Páginas siguientes
+  while (pageToken) {
+    const nextPage = await drive.files.list({
+      q: `'${folderId}' in parents and (mimeType contains 'image/') and trashed = false`,
+      fields: "nextPageToken, files(id, name, thumbnailLink)",
+      orderBy: "name",
+      pageSize: 1000,
+      pageToken,
+    });
+
+    for (const file of nextPage.data.files || []) {
+      allFiles.push({ id: file.id || "", name: file.name || "", thumbnailLink: file.thumbnailLink });
+    }
+    pageToken = nextPage.data.nextPageToken || undefined;
+  }
+
+  const fotos = allFiles.map((file) => ({
+    id: file.id,
+    nombre: file.name,
     url: file.thumbnailLink?.replace("=s220", "=s1600") || `/api/imagen/${file.id}`,
     thumbnail: file.thumbnailLink?.replace("=s220", "=s600") || `/api/imagen/${file.id}`,
     downloadUrl: `/api/imagen/${file.id}`,
