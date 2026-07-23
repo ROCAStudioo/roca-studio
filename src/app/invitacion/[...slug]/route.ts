@@ -44,7 +44,20 @@ export async function GET(
     try {
       await fs.access(filePath);
     } catch {
-      return new NextResponse("No encontrado", { status: 404 });
+      // Intentar buscar con case-insensitive (Windows vs Linux)
+      try {
+        const dir = path.dirname(filePath);
+        const fileName = path.basename(filePath);
+        const files = await fs.readdir(dir);
+        const match = files.find((f) => f.toLowerCase() === fileName.toLowerCase());
+        if (match) {
+          filePath = path.join(dir, match);
+        } else {
+          return new NextResponse("No encontrado", { status: 404 });
+        }
+      } catch {
+        return new NextResponse("No encontrado", { status: 404 });
+      }
     }
 
     // Leer el archivo

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>XV Años - Ada</title>
+    <base href="/invitacion/misxv-ada/">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Preview para WhatsApp y redes sociales -->
+    <meta property="og:title" content="XV Años de Ada 👑">
+    <meta property="og:description" content="Estás invitado(a) a mis XV años. ¡Te espero!">
+    <meta property="og:image" content="preview.jpeg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="XV Años de Ada 👑">
+    <meta name="twitter:description" content="Estás invitado(a) a mis XV años. ¡Te espero!">
+    <meta name="twitter:image" content="preview.jpeg">
+</head>
+<body>
+
+    <!-- ========== PANTALLA DE INICIO ========== -->
+    <div id="pantalla-inicio" class="pantalla-inicio">
+        <!-- Video de fondo de la portada -->
+        <video id="video-portada" class="video-portada" autoplay muted loop playsinline webkit-playsinline>
+            <source src="video_portada_ligero.mp4" type="video/mp4">
+        </video>
+        <div class="portada-overlay"></div>
+
+        <!-- Destellos dorados -->
+        <div class="destellos" id="destellos-inicio"></div>
+
+        <div class="inicio-contenido">
+            <div id="slider-abrir" class="slider-container">
+                <div class="slider-track">
+                    <div id="slider-thumb" class="slider-thumb">
+                        <span class="slider-thumb-icon">👑</span>
+                    </div>
+                    <div class="slider-flechas">
+                        <span class="flecha">›</span>
+                        <span class="flecha">›</span>
+                        <span class="flecha">›</span>
+                    </div>
+                    <span class="slider-texto">Desliza para abrir</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== PANTALLA PRINCIPAL ========== -->
+    <div id="pantalla-principal" class="pantalla-principal pantalla-oculta-visual">
+        
+        <!-- Video principal -->
+        <div id="video-container" class="video-container">
+            <video id="video-principal" playsinline webkit-playsinline preload="metadata" src="video_1_ligero.mp4">
+            </video>
+
+            <!-- Botón de pausa discreto -->
+            <button id="btn-pausa" class="btn-pausa" aria-label="Pausar/Reproducir">
+                <span id="icono-pausa">❚❚</span>
+            </button>
+
+            <!-- Indicador de carga del video -->
+            <div id="loader-video" class="loader-video">
+                <div class="loader-video-spinner"></div>
+                <p>Cargando...</p>
+            </div>
+        </div>
+
+        <!-- Capa de efectos visuales -->
+        <div id="capa-efectos" class="capa-efectos"></div>
+        <canvas id="canvas-particulas" class="canvas-particulas"></canvas>
+
+        <!-- ========== PANTALLA FINAL ========== -->
+        <div id="pantalla-final" class="pantalla-final oculto">
+            <!-- Video de fondo -->
+            <video class="video-fondo-final" autoplay muted loop playsinline webkit-playsinline>
+                <source src="video_final_ligero.mp4" type="video/mp4">
+            </video>
+            <div class="overlay-final"></div>
+
+            <div class="final-contenido">
+                <div class="decoracion-corona">👑</div>
+                <p class="subtitulo-final-xv">Mis XV Años</p>
+                <h2 class="titulo-final">Ada</h2>
+                <div class="separador-dorado"></div>
+                <p class="subtitulo-final">8 de Agosto de 2026</p>
+
+                <!-- Frase favorita -->
+                <p class="frase-favorita">"Mientras uno esté vivo, uno debe amar lo más que pueda."</p>
+
+                <!-- Padres -->
+                <div class="seccion-familia">
+                    <p class="familia-titulo">Papás</p>
+                    <p class="familia-nombres">
+                        Adan Lobato Toral<br>
+                        María del Socorro Villa Ramiro
+                    </p>
+                </div>
+
+                <!-- Padrinos -->
+                <div class="seccion-familia">
+                    <p class="familia-titulo">Padrinos</p>
+                    <p class="familia-nombres">
+                        Sr. Gabriel Orlando X. Oropeza<br>
+                        Profa. Lilia Villa Ramiro
+                    </p>
+                </div>
+
+                <div class="separador-dorado"></div>
+
+                <!-- Cuenta regresiva -->
+                <div class="cuenta-regresiva">
+                    <p class="cuenta-titulo">Faltan</p>
+                    <div class="cuenta-numeros">
+                        <div class="cuenta-item">
+                            <span id="cuenta-dias" class="cuenta-valor">0</span>
+                            <span class="cuenta-label">Días</span>
+                        </div>
+                        <div class="cuenta-item">
+                            <span id="cuenta-horas" class="cuenta-valor">0</span>
+                            <span class="cuenta-label">Hrs</span>
+                        </div>
+                        <div class="cuenta-item">
+                            <span id="cuenta-minutos" class="cuenta-valor">0</span>
+                            <span class="cuenta-label">Min</span>
+                        </div>
+                        <div class="cuenta-item">
+                            <span id="cuenta-segundos" class="cuenta-valor">0</span>
+                            <span class="cuenta-label">Seg</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Canción Favorita -->
+                <div class="cancion-favorita">
+                    <p class="cancion-titulo">🎵 Canción Favorita</p>
+                    <div style="display:flex;align-items:center;justify-content:center;gap:12px;">
+                        <p class="cancion-nombre" style="margin-bottom:0;">ABBA - Dancing Queen</p>
+                        <a href="#" id="btn-cancion" onclick="toggleCancion(); return false;" style="display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;border:2px solid #d4a574;background:rgba(244,164,192,0.3);color:#4a2c3d;font-size:1rem;text-decoration:none;">▶</a>
+                    </div>
+                    <audio id="audio-cancion" src="DNA.mp3" preload="metadata"></audio>
+                </div>
+
+                <!-- Ubicaciones -->
+                <div class="botones-final">
+                    <button class="btn-final btn-ubicacion" onclick="abrirModalUbicacion('ceremonia')">
+                        <span class="btn-icono">⛪</span>
+                        <span>Ver ubicación de la ceremonia</span>
+                    </button>
+
+                    <button class="btn-final btn-ubicacion" onclick="abrirModalUbicacion('recepcion')">
+                        <span class="btn-icono">🏰</span>
+                        <span>Ver ubicación del salón</span>
+                    </button>
+                </div>
+
+                <!-- Orden del día -->
+                <div class="orden-del-dia">
+                    <p class="orden-titulo">Orden del Día</p>
+                    <div class="orden-lista">
+                        <div class="orden-item">
+                            <span class="orden-hora">1:00 PM</span>
+                            <span class="orden-evento">Ceremonia Religiosa</span>
+                        </div>
+                        <div class="orden-item">
+                            <span class="orden-hora">2:30 a 3:00 PM</span>
+                            <span class="orden-evento">Recepción de Invitados</span>
+                        </div>
+                        <div class="orden-item">
+                            <span class="orden-hora">4:00 a 6:00 PM</span>
+                            <span class="orden-evento">Servicio de Banquete</span>
+                        </div>
+                        <div class="orden-item">
+                            <span class="orden-hora">7:00 PM</span>
+                            <span class="orden-evento">Protocolo</span>
+                        </div>
+                        <div class="orden-item">
+                            <span class="orden-hora">8:15 PM</span>
+                            <span class="orden-evento">Baile y Fiesta</span>
+                        </div>
+                        <div class="orden-item">
+                            <span class="orden-hora">9:00 PM</span>
+                            <span class="orden-evento">Tornafiesta</span>
+                        </div>
+                        <div class="orden-item">
+                            <span class="orden-hora">11:00 PM</span>
+                            <span class="orden-evento">Norteño</span>
+                        </div>
+                        <div class="orden-item">
+                            <span class="orden-hora">2:00 AM</span>
+                            <span class="orden-evento">Fin de la Fiesta</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Galería -->
+                <div class="carrusel-fotos">
+                    <img src="foto1.jpg" alt="Foto 1" class="carrusel-img vertical" onclick="verFoto(this)">
+                    <img src="foto2.jpg" alt="Foto 2" class="carrusel-img" onclick="verFoto(this)">
+                    <img src="foto3.jpg" alt="Foto 3" class="carrusel-img" onclick="verFoto(this)">
+                    <img src="foto4.jpg" alt="Foto 4" class="carrusel-img vertical" onclick="verFoto(this)">
+                    <img src="foto5.jpg" alt="Foto 5" class="carrusel-img" onclick="verFoto(this)">
+                    <img src="foto6.jpg" alt="Foto 6" class="carrusel-img vertical" onclick="verFoto(this)">
+                    <img src="foto7.jpg" alt="Foto 7" class="carrusel-img vertical" onclick="verFoto(this)">
+                    <img src="foto8.jpg" alt="Foto 8" class="carrusel-img" onclick="verFoto(this)">
+                    <img src="foto9.jpg" alt="Foto 9" class="carrusel-img vertical" onclick="verFoto(this)">
+                </div>
+
+                <!-- Sugerencia de regalos -->
+                <div class="seccion-regalos">
+                    <p class="regalos-titulo">Sugerencia de Regalos</p>
+                    <p class="regalos-texto">
+                        Su presencia es el mejor regalo, si estás pensando en hacerle un regalo a la quinceañera, 
+                        por favor considera un sobre con la donación de tu elección.
+                    </p>
+                    <div class="regalos-icono">💌</div>
+                    <p class="cancion-nombre">Lluvia de Sobres</p>
+                </div>
+
+                <!-- Confirmación de asistencia -->
+                <div class="botones-final" style="margin-top: 1.5rem;">
+                    <a id="btn-whatsapp" href="https://wa.me/522331101212?text=¡Hola!%20Confirmo%20mi%20asistencia%20a%20los%20XV%20años%20de%20Ada%20👑🎉" 
+                       target="_blank" 
+                       class="btn-final btn-whatsapp"
+                       onclick="efectoConfirmar(event)">
+                        <span class="btn-icono">💬</span>
+                        <span>Confirmar asistencia</span>
+                    </a>
+
+                    <button id="btn-repetir" class="btn-final btn-repetir" onclick="repetirInvitacion()">
+                        <span>Ver de nuevo</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== MODAL VIDEO UBICACIÓN ========== -->
+        <div id="modal-ubicacion" class="modal-ubicacion oculto">
+            <video id="video-ubicacion" class="video-ubicacion" playsinline webkit-playsinline loop>
+            </video>
+            <div class="modal-ubicacion-overlay"></div>
+            
+            <button class="modal-cerrar" onclick="cerrarModalUbicacion()">✕</button>
+            
+            <a id="btn-maps" href="#" target="_blank" class="btn-abrir-maps">
+                <span class="btn-icono">📍</span>
+                <span>Abrir en Maps</span>
+            </a>
+        </div>
+
+        <!-- Vista ampliada de foto -->
+        <div id="foto-ampliada" class="foto-ampliada oculto" onclick="cerrarFoto()">
+            <img id="foto-ampliada-img" src="" alt="Foto ampliada">
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
