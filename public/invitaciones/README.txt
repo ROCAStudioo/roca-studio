@@ -1,32 +1,101 @@
 ====================================================
   CÓMO AGREGAR INVITACIONES DIGITALES
+  ROCA Studio
 ====================================================
 
-1. Crea una carpeta aquí con el nombre del cliente
-   (minúsculas, sin espacios, usa guiones):
+URL final: rocastudio.site/invitacion/nombre-del-cliente
 
-   invitaciones/valentina-xv/
-   invitaciones/maria-jose-boda/
 
-2. Dentro coloca todos los archivos de la invitación:
-   - index.html
-   - style.css
-   - script.js
-   - Fotos, videos, audios, etc.
+====================================================
+  PASOS
+====================================================
 
-3. Haz git add, commit y push.
+1. Crea la carpeta de la invitación aquí:
+   public/invitaciones/nombre-del-cliente/
 
-4. La invitación estará disponible en:
-   rocastudio.site/invitacion/valentina-xv
-   rocastudio.site/invitacion/maria-jose-boda
+   REGLAS del nombre de carpeta:
+   - Minúsculas
+   - Sin espacios (usa guiones)
+   - Sin acentos ni ñ
+   Ejemplos: misxv-ada, boda-diana-saul, familia-garcia
 
-IMPORTANTE:
-- El nombre de la carpeta ES la URL
-- Dentro de tu index.html, las rutas a archivos
-  deben ser RELATIVAS, por ejemplo:
-  
-  BIEN:  src="Foto1.jpg"  o  href="style.css"
-  MAL:   src="/Foto1.jpg"  o  href="/style.css"
+2. Dentro debe haber un archivo index.html
 
-  Si usas rutas absolutas, cámbialas a:
-  src="/invitacion/nombre-carpeta/Foto1.jpg"
+3. Agrega esta línea en el <head> del index.html
+   (después del <title>):
+
+   <base href="/invitacion/nombre-del-cliente/">
+
+   Esto hace que todas las rutas relativas
+   (fotos, videos, css, js) funcionen correctamente.
+
+4. Haz deploy:
+   git add .
+   git commit -m "Invitación nombre-del-cliente"
+   git push
+
+5. La invitación estará en:
+   rocastudio.site/invitacion/nombre-del-cliente
+
+
+====================================================
+  EJEMPLO COMPLETO
+====================================================
+
+Carpeta:
+  public/invitaciones/misxv-ada/
+  ├── index.html
+  ├── style.css
+  ├── script.js
+  ├── foto1.jpg
+  ├── foto2.jpg
+  ├── video_portada_ligero.mp4
+  └── audio.mp3
+
+En el index.html:
+  <head>
+      ...
+      <title>XV Años - Ada</title>
+      <base href="/invitacion/misxv-ada/">
+      <link rel="stylesheet" href="style.css">
+      ...
+  </head>
+
+URL:
+  rocastudio.site/invitacion/misxv-ada
+
+
+====================================================
+  CÓMO PEDIRLE A KIRO QUE HAGA UNA INVITACIÓN
+====================================================
+
+Solo dile:
+
+  "Hazme una invitación digital para [evento]
+   de [nombre]. La fecha es [fecha], el lugar es
+   [lugar]. Que quede en la carpeta
+   public/invitaciones/[nombre-carpeta]/"
+
+Kiro la creará lista para hacer push.
+
+
+====================================================
+  NOTAS IMPORTANTES
+====================================================
+
+• Los videos pesados (>50 MB) funcionan pero GitHub
+  muestra una advertencia. No afecta el funcionamiento.
+
+• Para mejor rendimiento de videos, comprímelos
+  antes de subirlos (720p es suficiente para web).
+
+• Los archivos se sirven desde el CDN de Vercel
+  como archivos estáticos (rápido y con streaming).
+
+• Si la invitación no carga correctamente, revisa
+  que el <base href="..."> tenga el nombre exacto
+  de la carpeta.
+
+• Las rutas dentro del HTML deben ser RELATIVAS:
+  BIEN: src="foto1.jpg" o src="video.mp4"
+  MAL:  src="/foto1.jpg" o src="C:/Users/..."
