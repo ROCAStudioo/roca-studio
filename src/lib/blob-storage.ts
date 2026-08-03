@@ -11,6 +11,7 @@ export interface Cliente {
   carpetaDriveId: string;
   limiteEdicion?: number;
   limiteCuadro?: number;
+  incluyeCuadro?: boolean;
 }
 
 export async function leerClientes(): Promise<{ clientes: Cliente[] }> {

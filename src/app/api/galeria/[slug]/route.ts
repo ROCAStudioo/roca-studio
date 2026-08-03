@@ -156,6 +156,7 @@ export async function POST(
       fecha: cliente.fecha,
       limiteEdicion: cliente.limiteEdicion || 150,
       limiteCuadro: cliente.limiteCuadro || 1,
+      incluyeCuadro: cliente.incluyeCuadro !== false,
       secciones,
     });
   } catch (error) {

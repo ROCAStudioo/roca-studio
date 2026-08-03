@@ -32,6 +32,7 @@ interface ClienteData {
   fecha: string;
   limiteEdicion: number;
   limiteCuadro: number;
+  incluyeCuadro: boolean;
   secciones: SeccionGaleria[];
 }
 
@@ -150,8 +151,8 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
           evento: `${clienteData.evento} · ${clienteData.fecha}`,
           total_edicion: `${seleccionEdicion.size}/${limiteEdicion}`,
           fotos_edicion: fotosEdicionNombres,
-          total_cuadro: `${seleccionCuadro.size}/${limiteCuadro}`,
-          fotos_cuadro: fotosCuadroNombres,
+          total_cuadro: clienteData.incluyeCuadro ? `${seleccionCuadro.size}/${limiteCuadro}` : "No aplica",
+          fotos_cuadro: clienteData.incluyeCuadro ? fotosCuadroNombres : "No aplica",
         },
         EMAILJS_PUBLIC_KEY
       );
@@ -271,7 +272,7 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
             {modoSeleccion && (
               <span className="text-xs text-white/50">
                 ✏️ {seleccionEdicion.size}/{clienteData?.limiteEdicion || 150}
-                {(clienteData?.limiteCuadro || 1) > 0 && ` · 🖼️ ${seleccionCuadro.size}/${clienteData?.limiteCuadro || 1}`}
+                {clienteData?.incluyeCuadro && ` · 🖼️ ${seleccionCuadro.size}/${clienteData?.limiteCuadro || 1}`}
               </span>
             )}
             <button
@@ -313,7 +314,7 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
               </p>
               <p className="text-white/50 text-xs">
                 ✏️ Toca una foto para seleccionarla para <strong>edición</strong> (máx. {clienteData?.limiteEdicion || 150}).
-                Toca el icono 🖼️ para seleccionarla para <strong>cuadro</strong> (máx. {clienteData?.limiteCuadro || 1}).
+                {clienteData?.incluyeCuadro && ` Toca el icono 🖼️ para seleccionarla para cuadro (máx. ${clienteData?.limiteCuadro || 1}).`}
               </p>
             </motion.div>
           )}
@@ -390,8 +391,8 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
                       </div>
                     )}
 
-                    {/* Botón cuadro */}
-                    {modoSeleccion && (
+                    {/* Botón cuadro - solo si aplica */}
+                    {modoSeleccion && clienteData?.incluyeCuadro && (
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
@@ -448,8 +449,12 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
             <div className="text-sm text-white">
               <span className="text-white/50">Seleccionadas: </span>
               <span>✏️ {seleccionEdicion.size}/{clienteData?.limiteEdicion || 150}</span>
-              <span className="mx-2 text-white/30">·</span>
-              <span>🖼️ {seleccionCuadro.size}/{clienteData?.limiteCuadro || 1}</span>
+              {clienteData?.incluyeCuadro && (
+                <>
+                  <span className="mx-2 text-white/30">·</span>
+                  <span>🖼️ {seleccionCuadro.size}/{clienteData?.limiteCuadro || 1}</span>
+                </>
+              )}
             </div>
             <button
               onClick={enviarSeleccion}

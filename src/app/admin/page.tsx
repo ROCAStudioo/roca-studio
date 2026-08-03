@@ -13,6 +13,7 @@ interface Cliente {
   carpetaDriveId: string;
   limiteEdicion: number;
   limiteCuadro: number;
+  incluyeCuadro: boolean;
 }
 
 export default function AdminPanel() {
@@ -26,6 +27,7 @@ export default function AdminPanel() {
     carpetaDriveId: "",
     limiteEdicion: 150,
     limiteCuadro: 1,
+    incluyeCuadro: true,
   });
   const [copiado, setCopiado] = useState("");
   const [cargando, setCargando] = useState(false);
@@ -88,6 +90,7 @@ export default function AdminPanel() {
       carpetaDriveId: nuevoCliente.carpetaDriveId,
       limiteEdicion: nuevoCliente.limiteEdicion || 150,
       limiteCuadro: nuevoCliente.limiteCuadro || 1,
+      incluyeCuadro: nuevoCliente.incluyeCuadro,
     };
 
     try {
@@ -99,7 +102,7 @@ export default function AdminPanel() {
 
       if (res.ok) {
         setClientes([...clientes, cliente]);
-        setNuevoCliente({ nombre: "", evento: "", fecha: "", carpetaDriveId: "", limiteEdicion: 150, limiteCuadro: 1 });
+        setNuevoCliente({ nombre: "", evento: "", fecha: "", carpetaDriveId: "", limiteEdicion: 150, limiteCuadro: 1, incluyeCuadro: true });
         setMensaje({
           tipo: "ok",
           texto: `✓ Galería creada. Link: /galeria/${slug} | Código: ${codigo}`,
@@ -267,6 +270,18 @@ export default function AdminPanel() {
               />
             </div>
 
+            <div className="md:col-span-2">
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={nuevoCliente.incluyeCuadro}
+                  onChange={(e) => setNuevoCliente({ ...nuevoCliente, incluyeCuadro: e.target.checked })}
+                  className="w-4 h-4"
+                />
+                <span className="text-sm text-white/70">Este cliente puede seleccionar foto para cuadro</span>
+              </label>
+            </div>
+
             <div className="md:col-span-2 space-y-3">
               <button
                 type="submit"
@@ -305,7 +320,7 @@ export default function AdminPanel() {
                   Código: <span className="text-white/60">{cliente.codigo}</span>
                 </p>
                 <p className="text-white/20 text-xs mt-0.5">
-                  Edición: {cliente.limiteEdicion || 150} fotos · Cuadro: {cliente.limiteCuadro || 1} foto
+                  Edición: {cliente.limiteEdicion || 150} fotos · Cuadro: {cliente.incluyeCuadro !== false ? `${cliente.limiteCuadro || 1} foto` : "No incluye"}
                 </p>
               </div>
 
