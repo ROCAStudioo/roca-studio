@@ -151,13 +151,13 @@ export default function Footer() {
           </p>
           <div className="flex gap-6">
             <a
-              href="#"
+              href="/privacidad"
               className="text-xs text-white/30 hover:text-white/60 transition-colors"
             >
               Aviso de privacidad
             </a>
             <a
-              href="#"
+              href="/cookies"
               className="text-xs text-white/30 hover:text-white/60 transition-colors"
             >
               Política de cookies
