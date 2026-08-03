@@ -8,6 +8,11 @@ import {
 } from "lucide-react";
 import emailjs from "@emailjs/browser";
 
+// Inicializar EmailJS
+const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_5h2gclg";
+const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_sh5fy6o";
+const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "kcJABHUOM-iklLOPj";
+
 interface FotoCliente {
   id: string;
   nombre: string;
@@ -138,8 +143,8 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
     try {
       // Enviar correo con EmailJS
       await emailjs.send(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
         {
           cliente_nombre: clienteData.nombre,
           evento: `${clienteData.evento} · ${clienteData.fecha}`,
@@ -148,7 +153,7 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
           total_cuadro: `${seleccionCuadro.size}/${limiteCuadro}`,
           fotos_cuadro: fotosCuadroNombres,
         },
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+        EMAILJS_PUBLIC_KEY
       );
 
       setEnviado(true);
