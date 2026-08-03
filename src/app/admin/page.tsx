@@ -11,6 +11,8 @@ interface Cliente {
   fecha: string;
   codigo: string;
   carpetaDriveId: string;
+  limiteEdicion: number;
+  limiteCuadro: number;
 }
 
 export default function AdminPanel() {
@@ -22,6 +24,8 @@ export default function AdminPanel() {
     evento: "",
     fecha: "",
     carpetaDriveId: "",
+    limiteEdicion: 150,
+    limiteCuadro: 1,
   });
   const [copiado, setCopiado] = useState("");
   const [cargando, setCargando] = useState(false);
@@ -54,7 +58,6 @@ export default function AdminPanel() {
       .replace(/[\u0300-\u036f]/g, "")
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
-    // Agregar 4 caracteres aleatorios para evitar duplicados
     const id = Math.random().toString(36).substring(2, 6);
     return `${base}-${id}`;
   };
@@ -83,6 +86,8 @@ export default function AdminPanel() {
       fecha: nuevoCliente.fecha,
       codigo,
       carpetaDriveId: nuevoCliente.carpetaDriveId,
+      limiteEdicion: nuevoCliente.limiteEdicion || 150,
+      limiteCuadro: nuevoCliente.limiteCuadro || 1,
     };
 
     try {
@@ -94,7 +99,7 @@ export default function AdminPanel() {
 
       if (res.ok) {
         setClientes([...clientes, cliente]);
-        setNuevoCliente({ nombre: "", evento: "", fecha: "", carpetaDriveId: "" });
+        setNuevoCliente({ nombre: "", evento: "", fecha: "", carpetaDriveId: "", limiteEdicion: 150, limiteCuadro: 1 });
         setMensaje({
           tipo: "ok",
           texto: `✓ Galería creada. Link: /galeria/${slug} | Código: ${codigo}`,
@@ -126,7 +131,6 @@ export default function AdminPanel() {
 
   const eliminarCliente = async (slug: string) => {
     if (!confirm("¿Estás seguro de eliminar este cliente?")) return;
-
     try {
       await fetch(`/api/admin/clientes/${slug}`, { method: "DELETE" });
       setClientes(clientes.filter((c) => c.slug !== slug));
@@ -145,11 +149,8 @@ export default function AdminPanel() {
         >
           <div className="mb-8">
             <img src="/logo.png" alt="ROCA Studio" className="h-10 mx-auto" />
-            <span className="text-sm text-white/70 tracking-widest uppercase block mt-2">
-              Admin
-            </span>
+            <span className="text-sm text-white/70 tracking-widest uppercase block mt-2">Admin</span>
           </div>
-
           <form onSubmit={loginAdmin} className="space-y-4">
             <div className="w-12 h-12 border border-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
               <Lock size={20} className="text-white/60" />
@@ -162,10 +163,7 @@ export default function AdminPanel() {
               className="w-full bg-transparent border border-white/15 px-4 py-3 text-white text-sm text-center focus:border-white/40 focus:outline-none transition-colors"
               required
             />
-            <button
-              type="submit"
-              className="w-full py-3 bg-white text-black text-sm tracking-widest uppercase hover:bg-white/90 transition-colors"
-            >
+            <button type="submit" className="w-full py-3 bg-white text-black text-sm tracking-widest uppercase hover:bg-white/90 transition-colors">
               Entrar
             </button>
           </form>
@@ -180,16 +178,9 @@ export default function AdminPanel() {
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div>
             <img src="/logo.png" alt="ROCA Studio" className="h-8 inline-block" />
-            <span className="text-xs text-white/70 ml-3 tracking-widest uppercase">
-              Panel de Administración
-            </span>
+            <span className="text-xs text-white/70 ml-3 tracking-widest uppercase">Panel de Administración</span>
           </div>
-          <a
-            href="/"
-            className="text-xs text-white/40 hover:text-white transition-colors"
-          >
-            ← Volver al sitio
-          </a>
+          <a href="/" className="text-xs text-white/40 hover:text-white transition-colors">← Volver al sitio</a>
         </div>
       </header>
 
@@ -207,15 +198,11 @@ export default function AdminPanel() {
 
           <form onSubmit={agregarCliente} className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs text-white/50 tracking-wide mb-1 uppercase">
-                Nombre del cliente
-              </label>
+              <label className="block text-xs text-white/50 tracking-wide mb-1 uppercase">Nombre del cliente</label>
               <input
                 type="text"
                 value={nuevoCliente.nombre}
-                onChange={(e) =>
-                  setNuevoCliente({ ...nuevoCliente, nombre: e.target.value })
-                }
+                onChange={(e) => setNuevoCliente({ ...nuevoCliente, nombre: e.target.value })}
                 placeholder="Ana & Carlos"
                 className="w-full bg-transparent border border-white/15 px-4 py-2.5 text-white text-sm focus:border-white/40 focus:outline-none transition-colors"
                 required
@@ -223,15 +210,11 @@ export default function AdminPanel() {
             </div>
 
             <div>
-              <label className="block text-xs text-white/50 tracking-wide mb-1 uppercase">
-                Tipo de evento
-              </label>
+              <label className="block text-xs text-white/50 tracking-wide mb-1 uppercase">Tipo de evento</label>
               <input
                 type="text"
                 value={nuevoCliente.evento}
-                onChange={(e) =>
-                  setNuevoCliente({ ...nuevoCliente, evento: e.target.value })
-                }
+                onChange={(e) => setNuevoCliente({ ...nuevoCliente, evento: e.target.value })}
                 placeholder="Boda"
                 className="w-full bg-transparent border border-white/15 px-4 py-2.5 text-white text-sm focus:border-white/40 focus:outline-none transition-colors"
                 required
@@ -239,15 +222,11 @@ export default function AdminPanel() {
             </div>
 
             <div>
-              <label className="block text-xs text-white/50 tracking-wide mb-1 uppercase">
-                Fecha del evento
-              </label>
+              <label className="block text-xs text-white/50 tracking-wide mb-1 uppercase">Fecha del evento</label>
               <input
                 type="text"
                 value={nuevoCliente.fecha}
-                onChange={(e) =>
-                  setNuevoCliente({ ...nuevoCliente, fecha: e.target.value })
-                }
+                onChange={(e) => setNuevoCliente({ ...nuevoCliente, fecha: e.target.value })}
                 placeholder="15 de Marzo, 2026"
                 className="w-full bg-transparent border border-white/15 px-4 py-2.5 text-white text-sm focus:border-white/40 focus:outline-none transition-colors"
                 required
@@ -255,21 +234,36 @@ export default function AdminPanel() {
             </div>
 
             <div>
-              <label className="block text-xs text-white/50 tracking-wide mb-1 uppercase">
-                ID de carpeta en Google Drive
-              </label>
+              <label className="block text-xs text-white/50 tracking-wide mb-1 uppercase">ID carpeta Google Drive</label>
               <input
                 type="text"
                 value={nuevoCliente.carpetaDriveId}
-                onChange={(e) =>
-                  setNuevoCliente({
-                    ...nuevoCliente,
-                    carpetaDriveId: e.target.value,
-                  })
-                }
+                onChange={(e) => setNuevoCliente({ ...nuevoCliente, carpetaDriveId: e.target.value })}
                 placeholder="1AbC2dEfG3hIjK..."
                 className="w-full bg-transparent border border-white/15 px-4 py-2.5 text-white text-sm focus:border-white/40 focus:outline-none transition-colors"
                 required
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs text-white/50 tracking-wide mb-1 uppercase">Límite fotos para edición</label>
+              <input
+                type="number"
+                value={nuevoCliente.limiteEdicion}
+                onChange={(e) => setNuevoCliente({ ...nuevoCliente, limiteEdicion: parseInt(e.target.value) || 150 })}
+                min={1}
+                className="w-full bg-transparent border border-white/15 px-4 py-2.5 text-white text-sm focus:border-white/40 focus:outline-none transition-colors"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs text-white/50 tracking-wide mb-1 uppercase">Límite fotos para cuadro</label>
+              <input
+                type="number"
+                value={nuevoCliente.limiteCuadro}
+                onChange={(e) => setNuevoCliente({ ...nuevoCliente, limiteCuadro: parseInt(e.target.value) || 1 })}
+                min={1}
+                className="w-full bg-transparent border border-white/15 px-4 py-2.5 text-white text-sm focus:border-white/40 focus:outline-none transition-colors"
               />
             </div>
 
@@ -282,13 +276,8 @@ export default function AdminPanel() {
                 {cargando && <Loader2 size={14} className="animate-spin" />}
                 {cargando ? "Creando..." : "Crear Galería"}
               </button>
-
               {mensaje && (
-                <p
-                  className={`text-sm ${
-                    mensaje.tipo === "ok" ? "text-green-400" : "text-red-400"
-                  }`}
-                >
+                <p className={`text-sm ${mensaje.tipo === "ok" ? "text-green-400" : "text-red-400"}`}>
                   {mensaje.texto}
                 </p>
               )}
@@ -311,11 +300,12 @@ export default function AdminPanel() {
             >
               <div>
                 <h3 className="text-white font-medium">{cliente.nombre}</h3>
-                <p className="text-white/40 text-sm">
-                  {cliente.evento} · {cliente.fecha}
-                </p>
+                <p className="text-white/40 text-sm">{cliente.evento} · {cliente.fecha}</p>
                 <p className="text-white/30 text-xs mt-1 font-mono">
                   Código: <span className="text-white/60">{cliente.codigo}</span>
+                </p>
+                <p className="text-white/20 text-xs mt-0.5">
+                  Edición: {cliente.limiteEdicion || 150} fotos · Cuadro: {cliente.limiteCuadro || 1} foto
                 </p>
               </div>
 
@@ -327,7 +317,6 @@ export default function AdminPanel() {
                   <Copy size={12} />
                   {copiado === cliente.slug ? "¡Copiado!" : "Copiar link"}
                 </button>
-
                 <a
                   href={`/galeria/${cliente.slug}`}
                   target="_blank"
@@ -336,7 +325,6 @@ export default function AdminPanel() {
                   <ExternalLink size={12} />
                   Ver
                 </a>
-
                 <button
                   onClick={() => eliminarCliente(cliente.slug)}
                   className="flex items-center gap-1.5 px-3 py-1.5 border border-red-500/20 text-red-400/60 text-xs hover:text-red-400 hover:border-red-500/40 transition-all"

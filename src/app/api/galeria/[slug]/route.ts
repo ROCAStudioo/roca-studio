@@ -154,6 +154,8 @@ export async function POST(
       nombre: cliente.nombre,
       evento: cliente.evento,
       fecha: cliente.fecha,
+      limiteEdicion: cliente.limiteEdicion || 150,
+      limiteCuadro: cliente.limiteCuadro || 1,
       secciones,
     });
   } catch (error) {

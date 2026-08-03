@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@vercel/blob": "^2.6.1",
     "framer-motion": "^12.42.2",
     "googleapis": "^173.0.0",

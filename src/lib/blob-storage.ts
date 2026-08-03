@@ -9,6 +9,8 @@ export interface Cliente {
   fecha: string;
   codigo: string;
   carpetaDriveId: string;
+  limiteEdicion?: number;
+  limiteCuadro?: number;
 }
 
 export async function leerClientes(): Promise<{ clientes: Cliente[] }> {
