@@ -162,8 +162,9 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
       }, 1000);
 
     } catch (err) {
-      console.error(err);
-      setErrorEnvio("Error al enviar. Intenta de nuevo o contáctanos por WhatsApp.");
+      console.error("EmailJS error:", err);
+      const errorMsg = err instanceof Error ? err.message : String(err);
+      setErrorEnvio(`Error al enviar: ${errorMsg}. Intenta de nuevo o contáctanos por WhatsApp.`);
     } finally {
       setEnviando(false);
     }
