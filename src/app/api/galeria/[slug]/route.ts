@@ -108,7 +108,11 @@ async function obtenerSecciones(carpetaPrincipalId: string) {
     return [{ nombre: "Todas las fotos", fotos }];
   }
 
-  const secciones = await Promise.all(
+  // Obtener fotos sueltas en la carpeta principal
+  const fotosSueltas = await obtenerFotosDeCarpeta(carpetaPrincipalId);
+
+  // Obtener fotos de cada subcarpeta
+  const seccionesSubcarpetas = await Promise.all(
     carpetas.map(async (carpeta) => {
       const fotos = await obtenerFotosDeCarpeta(carpeta.id || "");
       return {
@@ -117,6 +121,13 @@ async function obtenerSecciones(carpetaPrincipalId: string) {
       };
     })
   );
+
+  // Combinar: primero las fotos sueltas (si hay), luego las subcarpetas
+  const secciones = [];
+  if (fotosSueltas.length > 0) {
+    secciones.push({ nombre: "Evento", fotos: fotosSueltas });
+  }
+  secciones.push(...seccionesSubcarpetas);
 
   return secciones;
 }
