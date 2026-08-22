@@ -34,6 +34,7 @@ interface ClienteData {
   limiteEdicion: number;
   limiteCuadro: number;
   incluyeCuadro: boolean;
+  permiteDescarga: boolean;
   secciones: SeccionGaleria[];
 }
 
@@ -448,7 +449,7 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
         )}
 
         {/* Botón descargar todo */}
-        {!modoSeleccion && (
+        {!modoSeleccion && clienteData?.permiteDescarga && (
           <div className="text-center mt-12">
             <a
               href="#"
@@ -548,26 +549,33 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
                 </div>
                 <p className="text-white text-lg mb-2">{clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].nombre}</p>
                 <p className="text-white/50 text-sm mb-6">Video</p>
-                <a
-                  href={clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].downloadUrl}
-                  download
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black text-sm tracking-wide hover:bg-white/90 transition-all"
-                >
-                  <Download size={16} />
-                  Descargar video
-                </a>
+                {clienteData.permiteDescarga && (
+                  <a
+                    href={clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].downloadUrl}
+                    download
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black text-sm tracking-wide hover:bg-white/90 transition-all"
+                  >
+                    <Download size={16} />
+                    Descargar video
+                  </a>
+                )}
+                {!clienteData.permiteDescarga && (
+                  <p className="text-white/40 text-sm">Descarga no disponible</p>
+                )}
               </motion.div>
             )}
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2" onClick={(e) => e.stopPropagation()}>
               <p className="text-white/70 text-sm">{clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].nombre}</p>
-              <a
-                href={clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].downloadUrl}
-                download
-                className="flex items-center gap-2 px-4 py-2 border border-white/30 text-white text-xs tracking-wide hover:bg-white hover:text-black transition-all"
-              >
-                <Download size={14} />
-                Descargar
-              </a>
+              {clienteData.permiteDescarga && (
+                <a
+                  href={clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].downloadUrl}
+                  download
+                  className="flex items-center gap-2 px-4 py-2 border border-white/30 text-white text-xs tracking-wide hover:bg-white hover:text-black transition-all"
+                >
+                  <Download size={14} />
+                  Descargar
+                </a>
+              )}
             </div>
           </motion.div>
         )}

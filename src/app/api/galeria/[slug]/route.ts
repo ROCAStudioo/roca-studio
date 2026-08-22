@@ -174,6 +174,7 @@ export async function POST(
       limiteEdicion: cliente.limiteEdicion || 150,
       limiteCuadro: cliente.limiteCuadro || 1,
       incluyeCuadro: cliente.incluyeCuadro !== false,
+      permiteDescarga: cliente.permiteDescarga !== false,
       secciones,
     });
   } catch (error) {

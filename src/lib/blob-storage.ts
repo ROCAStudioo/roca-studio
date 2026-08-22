@@ -12,6 +12,7 @@ export interface Cliente {
   limiteEdicion?: number;
   limiteCuadro?: number;
   incluyeCuadro?: boolean;
+  permiteDescarga?: boolean;
 }
 
 export async function leerClientes(): Promise<{ clientes: Cliente[] }> {

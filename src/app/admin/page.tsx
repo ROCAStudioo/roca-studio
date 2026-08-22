@@ -14,6 +14,7 @@ interface Cliente {
   limiteEdicion: number;
   limiteCuadro: number;
   incluyeCuadro: boolean;
+  permiteDescarga: boolean;
 }
 
 export default function AdminPanel() {
@@ -28,6 +29,7 @@ export default function AdminPanel() {
     limiteEdicion: 150,
     limiteCuadro: 1,
     incluyeCuadro: true,
+    permiteDescarga: true,
   });
   const [copiado, setCopiado] = useState("");
   const [cargando, setCargando] = useState(false);
@@ -91,6 +93,7 @@ export default function AdminPanel() {
       limiteEdicion: nuevoCliente.limiteEdicion || 150,
       limiteCuadro: nuevoCliente.limiteCuadro || 1,
       incluyeCuadro: nuevoCliente.incluyeCuadro,
+      permiteDescarga: nuevoCliente.permiteDescarga,
     };
 
     try {
@@ -102,7 +105,7 @@ export default function AdminPanel() {
 
       if (res.ok) {
         setClientes([...clientes, cliente]);
-        setNuevoCliente({ nombre: "", evento: "", fecha: "", carpetaDriveId: "", limiteEdicion: 150, limiteCuadro: 1, incluyeCuadro: true });
+        setNuevoCliente({ nombre: "", evento: "", fecha: "", carpetaDriveId: "", limiteEdicion: 150, limiteCuadro: 1, incluyeCuadro: true, permiteDescarga: true });
         setMensaje({
           tipo: "ok",
           texto: `✓ Galería creada. Link: /galeria/${slug} | Código: ${codigo}`,
@@ -279,6 +282,18 @@ export default function AdminPanel() {
                   className="w-4 h-4"
                 />
                 <span className="text-sm text-white/70">Este cliente puede seleccionar foto para cuadro</span>
+              </label>
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={nuevoCliente.permiteDescarga}
+                  onChange={(e) => setNuevoCliente({ ...nuevoCliente, permiteDescarga: e.target.checked })}
+                  className="w-4 h-4"
+                />
+                <span className="text-sm text-white/70">El cliente puede descargar el material</span>
               </label>
             </div>
 
