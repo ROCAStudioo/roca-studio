@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Lock, Eye, EyeOff, X, ChevronLeft, ChevronRight,
-  Download, FolderOpen, CheckCircle, Square, Frame, Send,
+  Download, FolderOpen, CheckCircle, Square, Frame, Send, Play,
 } from "lucide-react";
 import emailjs from "@emailjs/browser";
 
@@ -16,6 +16,7 @@ const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "kcJABH
 interface FotoCliente {
   id: string;
   nombre: string;
+  tipo: string;
   url: string;
   thumbnail: string;
   downloadUrl: string;
@@ -413,7 +414,20 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
 
                     {!modoSeleccion && (
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-                        <Download size={20} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                        {foto.tipo === "video" ? (
+                          <div className="w-12 h-12 rounded-full border-2 border-white/80 flex items-center justify-center bg-black/40">
+                            <Play size={20} className="text-white ml-0.5" fill="white" />
+                          </div>
+                        ) : (
+                          <Download size={20} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                        )}
+                      </div>
+                    )}
+
+                    {/* Icono de video siempre visible */}
+                    {foto.tipo === "video" && !modoSeleccion && (
+                      <div className="absolute top-2 left-2 bg-black/60 px-2 py-0.5 rounded text-[10px] text-white/80 flex items-center gap-1">
+                        <Play size={10} fill="white" /> VIDEO
                       </div>
                     )}
                   </div>
@@ -501,9 +515,35 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
               animate={{ opacity: 1, scale: 1 }}
               src={clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].url}
               alt={clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].nombre}
-              className="max-h-[85vh] max-w-[90vw] object-contain"
+              className={`max-h-[85vh] max-w-[90vw] object-contain ${
+                clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].tipo === "video" ? "hidden" : ""
+              }`}
               onClick={(e) => e.stopPropagation()}
             />
+
+            {/* Para videos, mostrar panel de descarga */}
+            {clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].tipo === "video" && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                onClick={(e) => e.stopPropagation()}
+                className="text-center"
+              >
+                <div className="w-24 h-24 rounded-full border-2 border-white/40 flex items-center justify-center mx-auto mb-6">
+                  <Play size={40} className="text-white ml-1" />
+                </div>
+                <p className="text-white text-lg mb-2">{clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].nombre}</p>
+                <p className="text-white/50 text-sm mb-6">Video</p>
+                <a
+                  href={clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].downloadUrl}
+                  download
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black text-sm tracking-wide hover:bg-white/90 transition-all"
+                >
+                  <Download size={16} />
+                  Descargar video
+                </a>
+              </motion.div>
+            )}
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2" onClick={(e) => e.stopPropagation()}>
               <p className="text-white/70 text-sm">{clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].nombre}</p>
               <a
