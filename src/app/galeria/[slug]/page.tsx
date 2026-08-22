@@ -381,6 +381,13 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
                       loading="lazy"
                     />
 
+                    {/* Marca de agua */}
+                    {foto.tipo !== "video" && (
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <img src="/logo.png" alt="" className="w-1/3 opacity-20" />
+                      </div>
+                    )}
+
                     {/* Overlay selección edición */}
                     {modoSeleccion && (
                       <div className="absolute top-2 left-2">
@@ -520,6 +527,13 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
               }`}
               onClick={(e) => e.stopPropagation()}
             />
+
+            {/* Marca de agua en lightbox */}
+            {clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].tipo !== "video" && (
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <img src="/logo.png" alt="" className="w-1/4 opacity-20" />
+              </div>
+            )}
 
             {/* Para videos, mostrar panel de descarga */}
             {clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].tipo === "video" && (
