@@ -372,6 +372,7 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
                         setLightbox({ seccion: seccionActiva, foto: index });
                       }
                     }}
+                    onContextMenu={!clienteData?.permiteDescarga ? (e) => e.preventDefault() : undefined}
                   >
                     <img
                       src={foto.thumbnail}
@@ -380,6 +381,9 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
                         modoSeleccion ? "group-hover:opacity-80" : "group-hover:scale-105"
                       } ${enEdicion ? "opacity-70" : ""}`}
                       loading="lazy"
+                      draggable={clienteData?.permiteDescarga !== false ? true : false}
+                      onDragStart={!clienteData?.permiteDescarga ? (e) => e.preventDefault() : undefined}
+                      style={!clienteData?.permiteDescarga ? { WebkitUserSelect: "none", userSelect: "none" } : undefined}
                     />
 
                     {/* Marca de agua */}
@@ -527,6 +531,10 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
                 clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].tipo === "video" ? "hidden" : ""
               }`}
               onClick={(e) => e.stopPropagation()}
+              onContextMenu={!clienteData.permiteDescarga ? (e) => e.preventDefault() : undefined}
+              draggable={clienteData.permiteDescarga}
+              onDragStart={!clienteData.permiteDescarga ? (e) => e.preventDefault() : undefined}
+              style={!clienteData.permiteDescarga ? { WebkitUserSelect: "none", userSelect: "none" } : undefined}
             />
 
             {/* Marca de agua en lightbox */}

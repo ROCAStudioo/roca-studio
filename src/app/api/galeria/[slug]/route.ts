@@ -175,7 +175,17 @@ export async function POST(
       limiteCuadro: cliente.limiteCuadro || 1,
       incluyeCuadro: cliente.incluyeCuadro !== false,
       permiteDescarga: cliente.permiteDescarga !== false,
-      secciones,
+      secciones: (cliente.permiteDescarga !== false)
+        ? secciones
+        : secciones.map((s) => ({
+            ...s,
+            fotos: s.fotos.map((f: { id: string; nombre: string; tipo: string; url: string; thumbnail: string; downloadUrl: string }) => ({
+              ...f,
+              // Reducir resolución del lightbox y quitar downloadUrl
+              url: f.thumbnail, // Usar la misma resolución baja
+              downloadUrl: "",
+            })),
+          })),
     });
   } catch (error) {
     console.error("Error en API galería:", error);
