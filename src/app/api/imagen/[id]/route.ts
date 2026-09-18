@@ -61,40 +61,36 @@ export async function GET(
     const { id } = await params;
     const drive = getGoogleDriveClient();
 
-    // Obtener metadatos (tipo y tamaño) para decidir cómo servir el archivo
+    // Obtener metadatos (tipo y tamaño)
     const meta = await drive.files.get({
       fileId: id,
       fields: "mimeType, size, name",
     });
 
     const contentType = meta.data.mimeType || "application/octet-stream";
-    const fileSize = meta.data.size ? parseInt(meta.data.size, 10) : 0;
     const esVideo = contentType.includes("video/");
     const rangeHeader = request.headers.get("range");
 
-    // ---- Streaming con soporte de Range (para videos que se reproducen en el navegador) ----
-    // El navegador pide rangos de bytes al reproducir un <video>; respondemos 206 con solo
-    // ese tramo, sin cargar el archivo completo en memoria.
-    if (esVideo && fileSize > 0) {
+    // ---- Videos: siempre por streaming, reenviando el Range a Google Drive ----
+    // Reenviamos el header Range tal cual a Drive y usamos SU respuesta (content-range,
+    // content-length). Así funciona aunque Drive todavía no reporte "size" en los
+    // metadatos (típico en videos recién subidos). Si el navegador no manda Range,
+    // pedimos el primer tramo para que el <video> pueda empezar a cargar y hacer seek.
+    if (esVideo) {
+      const MAX_CHUNK = 2 * 1024 * 1024; // 2 MB por respuesta
       let start = 0;
-      let end = fileSize - 1;
+      let end = MAX_CHUNK - 1;
 
       if (rangeHeader) {
         const match = /bytes=(\d+)-(\d*)/.exec(rangeHeader);
         if (match) {
           start = parseInt(match[1], 10);
-          if (match[2]) {
-            end = parseInt(match[2], 10);
-          }
+          end = match[2] ? parseInt(match[2], 10) : start + MAX_CHUNK - 1;
         }
       }
-
-      // Limitar el tamaño de cada tramo para no exceder límites de memoria/tiempo del servidor
-      const MAX_CHUNK = 2 * 1024 * 1024; // 2 MB por respuesta
       if (end - start + 1 > MAX_CHUNK) {
         end = start + MAX_CHUNK - 1;
       }
-      if (end > fileSize - 1) end = fileSize - 1;
 
       const driveRes = await drive.files.get(
         { fileId: id, alt: "media" },
@@ -104,18 +100,27 @@ export async function GET(
         }
       );
 
+      // Tomar los encabezados que devuelve Drive para pasarlos al navegador
+      const driveHeaders = driveRes.headers as Record<string, string>;
+      const contentRange = driveHeaders["content-range"];
+      const contentLength = driveHeaders["content-length"];
+
       const webStream = nodeStreamToWeb(driveRes.data as unknown as Readable);
-      const chunkSize = end - start + 1;
+
+      const responseHeaders: Record<string, string> = {
+        "Content-Type": contentType,
+        "Accept-Ranges": "bytes",
+        "Cache-Control": "public, max-age=86400, s-maxage=86400",
+      };
+      if (contentLength) responseHeaders["Content-Length"] = contentLength;
+      if (contentRange) responseHeaders["Content-Range"] = contentRange;
+
+      // 206 si Drive devolvió un rango parcial (lo normal); 200 si devolvió todo
+      const status = contentRange ? 206 : 200;
 
       return new NextResponse(webStream, {
-        status: 206,
-        headers: {
-          "Content-Type": contentType,
-          "Content-Length": chunkSize.toString(),
-          "Content-Range": `bytes ${start}-${end}/${fileSize}`,
-          "Accept-Ranges": "bytes",
-          "Cache-Control": "public, max-age=86400, s-maxage=86400",
-        },
+        status,
+        headers: responseHeaders,
       });
     }
 
@@ -132,7 +137,7 @@ export async function GET(
         "Content-Type": contentType,
         "Cache-Control": "public, max-age=86400, s-maxage=86400, immutable",
         "Content-Length": buffer.length.toString(),
-        "Accept-Ranges": esVideo ? "bytes" : "none",
+        "Accept-Ranges": "none",
       },
     });
   } catch (error) {
