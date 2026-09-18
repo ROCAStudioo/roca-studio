@@ -20,6 +20,7 @@ interface FotoCliente {
   url: string;
   thumbnail: string;
   downloadUrl: string;
+  videoUrl?: string;
 }
 
 interface SeccionGaleria {
@@ -544,34 +545,43 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
               </div>
             )}
 
-            {/* Para videos, mostrar panel de descarga */}
+            {/* Para videos: reproductor con streaming */}
             {clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].tipo === "video" && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 onClick={(e) => e.stopPropagation()}
-                className="text-center"
+                className="w-full max-w-4xl flex flex-col items-center"
               >
-                <div className="w-24 h-24 rounded-full border-2 border-white/40 flex items-center justify-center mx-auto mb-6">
-                  <Play size={40} className="text-white ml-1" />
-                </div>
-                <p className="text-white text-lg mb-2">{clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].nombre}</p>
-                <p className="text-white/50 text-sm mb-6">Video</p>
+                <video
+                  key={`video-${lightbox.seccion}-${lightbox.foto}`}
+                  src={
+                    clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].videoUrl ||
+                    clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].downloadUrl
+                  }
+                  poster={clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].thumbnail}
+                  controls
+                  autoPlay
+                  playsInline
+                  controlsList={!clienteData.permiteDescarga ? "nodownload" : undefined}
+                  onContextMenu={!clienteData.permiteDescarga ? (e) => e.preventDefault() : undefined}
+                  className="max-h-[80vh] max-w-full w-auto bg-black"
+                >
+                  Tu navegador no puede reproducir este video.
+                </video>
                 {clienteData.permiteDescarga && (
                   <a
                     href={clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].downloadUrl}
                     download
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black text-sm tracking-wide hover:bg-white/90 transition-all"
+                    className="mt-4 inline-flex items-center gap-2 px-6 py-3 bg-white text-black text-sm tracking-wide hover:bg-white/90 transition-all"
                   >
                     <Download size={16} />
                     Descargar video
                   </a>
                 )}
-                {!clienteData.permiteDescarga && (
-                  <p className="text-white/40 text-sm">Descarga no disponible</p>
-                )}
               </motion.div>
             )}
+            {clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].tipo !== "video" && (
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2" onClick={(e) => e.stopPropagation()}>
               <p className="text-white/70 text-sm">{clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].nombre}</p>
               {clienteData.permiteDescarga && (
@@ -585,6 +595,7 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
                 </a>
               )}
             </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

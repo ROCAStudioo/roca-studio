@@ -91,6 +91,8 @@ async function obtenerArchivosDeCarpeta(folderId: string) {
       url: file.thumbnailLink?.replace("=s220", "=s1600") || `/api/imagen/${file.id}`,
       thumbnail: file.thumbnailLink?.replace("=s220", "=s600") || `/api/imagen/${file.id}`,
       downloadUrl: `/api/imagen/${file.id}`,
+      // Para videos: URL que el reproductor usa para streaming (soporta Range)
+      videoUrl: esVideo ? `/api/imagen/${file.id}` : "",
     };
   });
 
@@ -179,11 +181,14 @@ export async function POST(
         ? secciones
         : secciones.map((s) => ({
             ...s,
-            fotos: s.fotos.map((f: { id: string; nombre: string; tipo: string; url: string; thumbnail: string; downloadUrl: string }) => ({
+            fotos: s.fotos.map((f: { id: string; nombre: string; tipo: string; url: string; thumbnail: string; downloadUrl: string; videoUrl: string }) => ({
               ...f,
-              // Reducir resolución del lightbox y quitar downloadUrl
-              url: f.thumbnail, // Usar la misma resolución baja
+              // Reducir resolución del lightbox y quitar descarga.
+              // Para fotos usamos la miniatura de baja resolución; para videos
+              // conservamos la url de streaming para que se puedan ver (no descargar).
+              url: f.tipo === "video" ? f.url : f.thumbnail,
               downloadUrl: "",
+              // videoUrl se conserva: permite reproducir sin permitir descarga
             })),
           })),
     });
