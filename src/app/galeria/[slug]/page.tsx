@@ -141,8 +141,14 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
     setErrorEnvio("");
     setEnviando(true);
 
-    const fotosEdicionNombres = Array.from(seleccionEdicion).map(getNombreFoto).join(", ");
-    const fotosCuadroNombres = Array.from(seleccionCuadro).map(getNombreFoto).join(", ") || "Ninguna";
+    const fotosEdicionNombres = Array.from(seleccionEdicion)
+      .map(getNombreFoto)
+      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" }))
+      .join(", ");
+    const fotosCuadroNombres = Array.from(seleccionCuadro)
+      .map(getNombreFoto)
+      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" }))
+      .join(", ") || "Ninguna";
 
     try {
       // Enviar correo con EmailJS
