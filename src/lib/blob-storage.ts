@@ -13,6 +13,7 @@ export interface Cliente {
   limiteCuadro?: number;
   incluyeCuadro?: boolean;
   permiteDescarga?: boolean;
+  marcaAgua?: boolean;
 }
 
 export async function leerClientes(): Promise<{ clientes: Cliente[] }> {

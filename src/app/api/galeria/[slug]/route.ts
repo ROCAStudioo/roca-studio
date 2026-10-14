@@ -177,6 +177,7 @@ export async function POST(
       limiteCuadro: cliente.limiteCuadro || 1,
       incluyeCuadro: cliente.incluyeCuadro !== false,
       permiteDescarga: cliente.permiteDescarga !== false,
+      marcaAgua: cliente.marcaAgua !== false,
       secciones: (cliente.permiteDescarga !== false)
         ? secciones
         : secciones.map((s) => ({

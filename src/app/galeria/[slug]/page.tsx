@@ -36,6 +36,7 @@ interface ClienteData {
   limiteCuadro: number;
   incluyeCuadro: boolean;
   permiteDescarga: boolean;
+  marcaAgua: boolean;
   secciones: SeccionGaleria[];
 }
 
@@ -394,7 +395,7 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
                     />
 
                     {/* Marca de agua */}
-                    {foto.tipo !== "video" && (
+                    {foto.tipo !== "video" && clienteData?.marcaAgua !== false && (
                       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                         <img src="/logo.png" alt="" className="w-1/3 opacity-20" />
                       </div>
@@ -545,7 +546,7 @@ export default function GaleriaCliente({ params }: { params: Promise<{ slug: str
             />
 
             {/* Marca de agua en lightbox */}
-            {clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].tipo !== "video" && (
+            {clienteData.secciones[lightbox.seccion].fotos[lightbox.foto].tipo !== "video" && clienteData.marcaAgua !== false && (
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <img src="/logo.png" alt="" className="w-1/4 opacity-20" />
               </div>
