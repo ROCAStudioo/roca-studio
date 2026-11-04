@@ -1,0 +1,504 @@
+/* =========================================================
+   Invitación · Mía Nicolette · Temática Bajo el Mar
+   Estructura base (estilos iniciales, ajustables)
+   ========================================================= */
+
+:root {
+  --deep:   #04243f;
+  --deep-2: #063a5e;
+  --teal:   #0e7490;
+  --aqua:   #35c9e0;
+  --foam:   #d7f6ff;
+  --gold:   #f3d27a;
+  --coral:  #ff7ba9;
+  --purple: #8a6cff;
+  --text:   #eaf7ff;
+
+  --font-script: 'Dancing Script', cursive;
+  --font-body:   'Quicksand', sans-serif;
+
+  /* Lienzo vertical tipo historia 9:16 */
+  --canvas-w: min(100vw, 480px);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background: #02101f;
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+}
+
+.hidden { display: none !important; }
+
+/* Fondo submarino general */
+.invitation {
+  position: relative;
+  width: var(--canvas-w);
+  background: transparent;
+  z-index: 2;
+}
+
+/* Video de fondo fijo en loop (al fondo real de la página) */
+.bg-video {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  background: #02101f;
+  pointer-events: none;
+}
+
+/* Capa oscura para legibilidad del texto sobre el video */
+.bg-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(2,16,31,.3), rgba(2,16,31,.65));
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* El contenido (escenas) debe ir por encima del video y la capa */
+.invitation .scene { position: relative; z-index: 2; }
+
+/* =========================================================
+   PANTALLA DE BIENVENIDA
+   ========================================================= */
+.welcome {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /* Capa semitransparente para ver el video de fondo detrás */
+  background:
+    radial-gradient(120% 90% at 50% 10%, rgba(53,201,224,.15), transparent 60%),
+    linear-gradient(180deg, rgba(6,58,94,.45), rgba(4,36,63,.6));
+  padding: 24px;
+}
+
+.welcome-inner { max-width: 360px; }
+
+.welcome-kicker {
+  font-size: .8rem;
+  letter-spacing: .35em;
+  text-transform: uppercase;
+  color: var(--aqua);
+  margin-bottom: 10px;
+}
+
+.welcome-title {
+  font-family: var(--font-script);
+  font-size: 3.6rem;
+  line-height: 1.05;
+  color: var(--foam);
+  text-shadow: 0 0 24px rgba(53,201,224,.6);
+  margin-bottom: 32px;
+}
+
+.start-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--deep);
+  background: linear-gradient(135deg, var(--gold), #ffe9b0);
+  border: none;
+  border-radius: 999px;
+  padding: 16px 30px;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(243,210,122,.35);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.start-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(243,210,122,.5); }
+.shell-icon { font-size: 1.3rem; }
+
+.welcome-hint {
+  margin-top: 18px;
+  font-size: .85rem;
+  color: rgba(234,247,255,.7);
+}
+
+/* =========================================================
+   VIDEO DE INTRODUCCIÓN
+   ========================================================= */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.intro-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.skip-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 20px;
+  z-index: 41;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: .9rem;
+  color: var(--text);
+  background: rgba(4,36,63,.6);
+  border: 1px solid rgba(255,255,255,.3);
+  border-radius: 999px;
+  padding: 10px 18px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+}
+
+/* =========================================================
+   SECCIONES / ESCENAS DE LA INVITACIÓN
+   ========================================================= */
+.scene {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 22px;
+  text-align: center;
+}
+
+/* La portada y el cierre con un poco más de aire */
+.scene-cover {
+  padding: 40px 22px;
+}
+
+.scene-content {
+  width: 100%;
+  max-width: 380px;
+  background: rgba(4,36,63,.45);
+  border: 1px solid rgba(53,201,224,.25);
+  border-radius: 20px;
+  padding: 22px 22px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 14px 38px rgba(0,0,0,.35);
+}
+
+.eyebrow {
+  font-size: .85rem;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--aqua);
+  margin-bottom: 14px;
+}
+
+.name {
+  font-family: var(--font-script);
+  font-size: 3.2rem;
+  color: var(--foam);
+  line-height: 1.05;
+  text-shadow: 0 0 20px rgba(53,201,224,.5);
+}
+
+.surname {
+  font-size: 1.1rem;
+  letter-spacing: .15em;
+  color: var(--text);
+  margin-top: 6px;
+}
+
+.scene-title {
+  font-family: var(--font-script);
+  font-size: 2rem;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.scene-text {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--text);
+  margin: 4px 0;
+}
+.scene-text.big { font-size: 1.5rem; font-weight: 600; }
+
+.role-label {
+  font-size: .8rem;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--aqua);
+  margin: 10px 0 4px;
+}
+
+.divider { font-size: 1.6rem; margin: 10px 0; }
+.mini-divider { font-size: 1.1rem; margin: 12px 0; color: var(--coral); }
+
+.cover-date {
+  margin-top: 12px;
+  font-size: 1.05rem;
+  letter-spacing: .08em;
+  color: var(--foam);
+}
+
+/* Fecha destacada */
+.date-day    { font-size: 1.2rem; letter-spacing: .2em; text-transform: uppercase; color: var(--aqua); }
+.date-number { font-family: var(--font-script); font-size: 5rem; color: var(--foam); line-height: 1; }
+.date-rest   { font-size: 1.1rem; letter-spacing: .12em; }
+
+.icon-big { font-size: 2.4rem; margin-bottom: 6px; }
+
+/* Botón "Cómo llegar" */
+.map-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: .95rem;
+  color: var(--deep);
+  text-decoration: none;
+  background: linear-gradient(135deg, var(--aqua), #8fe6f3);
+  border-radius: 999px;
+  padding: 11px 22px;
+  box-shadow: 0 8px 22px rgba(53,201,224,.35);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.map-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(53,201,224,.5); }
+.map-icon { font-size: 1.1rem; }
+
+/* Cuenta regresiva */
+.countdown {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+.cd-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 62px;
+  padding: 12px 6px;
+  background: rgba(14,116,144,.35);
+  border: 1px solid rgba(53,201,224,.35);
+  border-radius: 14px;
+}
+.cd-num {
+  font-family: var(--font-script);
+  font-size: 2.2rem;
+  line-height: 1;
+  color: var(--foam);
+  text-shadow: 0 0 14px rgba(53,201,224,.5);
+}
+.cd-label {
+  margin-top: 4px;
+  font-size: .7rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--aqua);
+}
+
+/* Fotos intercaladas entre secciones */
+.scene-photo { padding: 14px 22px; }
+.photo {
+  width: 100%;
+  max-width: 380px;
+  border-radius: 20px;
+  border: 1px solid rgba(53,201,224,.3);
+  box-shadow: 0 14px 38px rgba(0,0,0,.45);
+  display: block;
+}
+
+/* Galería tipo carrusel deslizable (una foto a la vez) */
+.gallery {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;           /* Firefox */
+  padding-bottom: 4px;
+}
+.gallery::-webkit-scrollbar { display: none; }  /* Chrome/Safari */
+
+.gallery-img {
+  flex: 0 0 100%;                  /* cada foto ocupa todo el ancho */
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid rgba(53,201,224,.3);
+  scroll-snap-align: center;
+  box-shadow: 0 10px 28px rgba(0,0,0,.4);
+}
+
+/* Puntos indicadores */
+.gallery-dots {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 12px;
+}
+.gallery-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(234,247,255,.35);
+  transition: background .3s ease, transform .3s ease;
+}
+.gallery-dots .dot.active {
+  background: var(--aqua);
+  transform: scale(1.3);
+}
+
+.gallery-hint {
+  margin-top: 10px;
+  font-size: .8rem;
+  letter-spacing: .1em;
+  color: rgba(234,247,255,.65);
+}
+
+/* Hoteles · carrusel deslizable (uno a la vez) */
+.hotel-carousel {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 4px;
+}
+.hotel-carousel::-webkit-scrollbar { display: none; }
+
+.hotel-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.hotel-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid rgba(53,201,224,.3);
+  box-shadow: 0 10px 28px rgba(0,0,0,.4);
+}
+.hotel-name {
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--foam);
+  margin-top: 12px;
+}
+
+/* Botón de WhatsApp */
+.wa-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0 6px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #04311f;
+  text-decoration: none;
+  background: linear-gradient(135deg, #25d366, #4ae08a);
+  border-radius: 999px;
+  padding: 14px 26px;
+  box-shadow: 0 10px 26px rgba(37,211,102,.35);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.wa-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(37,211,102,.5); }
+.wa-icon { font-size: 1.2rem; }
+.wa-number {
+  font-weight: 600;
+  letter-spacing: .08em;
+  color: var(--foam);
+}
+
+/* =========================================================
+   PIE · LOGO
+   ========================================================= */
+.footer-logo {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  padding: 28px 22px 40px;
+}
+.footer-logo img {
+  width: 70px;
+  max-width: 30%;
+  height: auto;
+  opacity: .75;
+}
+
+/* =========================================================
+   BOTÓN DE MÚSICA
+   ========================================================= */
+.music-btn {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 60;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.3);
+  background: rgba(4,36,63,.6);
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+}
+
+/* =========================================================
+   BURBUJAS DECORATIVAS (se generan desde script.js)
+   ========================================================= */
+.bubbles {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  overflow: hidden;
+}
+.bubble {
+  position: absolute;
+  bottom: -60px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.9), rgba(53,201,224,.25));
+  opacity: .5;
+  animation: rise linear infinite;
+}
+@keyframes rise {
+  0%   { transform: translateY(0) translateX(0); opacity: 0; }
+  10%  { opacity: .6; }
+  90%  { opacity: .4; }
+  100% { transform: translateY(-110vh) translateX(20px); opacity: 0; }
+}
+
+/* Aparición suave de secciones */
+.scene-content { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
+.scene-content.visible { opacity: 1; transform: translateY(0); }
+
+/* Aparición suave de fotos intercaladas */
+.photo { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
+.photo.visible { opacity: 1; transform: translateY(0); }

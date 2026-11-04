@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Mía Nicolette · Mi Bautizo · Bajo el Mar</title>
+<base href="/invitacion/mi-bautizo-mia-nicolette/">
+<meta name="description" content="Invitación digital al Bautizo de Mía Nicolette — Temática La Sirenita" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ============================================================= -->
+  <!-- PANTALLA DE BIENVENIDA (botón para iniciar video + audio)     -->
+  <!-- ============================================================= -->
+  <div id="welcome" class="welcome">
+    <div class="welcome-inner">
+      <p class="welcome-kicker">Mi Bautizo</p>
+      <h1 class="welcome-title">Mía Nicolette</h1>
+      <button id="startBtn" class="start-btn" type="button" aria-label="Abrir invitación">
+        Abrir invitación
+      </button>
+      <p class="welcome-hint">Toca para activar sonido ✦</p>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- VIDEO DE INTRODUCCIÓN (lo reemplazas por tu render final)     -->
+  <!-- ============================================================= -->
+  <section id="intro" class="intro hidden" aria-label="Video de introducción">
+    <video id="introVideo" class="intro-video" playsinline preload="auto">
+      <source src="video-introduccion.mp4" type="video/mp4" />
+    </video>
+    <button id="skipBtn" class="skip-btn" type="button">Saltar intro ⏭</button>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- INVITACIÓN (se revela al terminar / saltar el video)          -->
+  <!-- ============================================================= -->
+  <!-- VIDEO DE FONDO EN LOOP (visible desde la bienvenida) -->
+  <video id="bgVideo" class="bg-video" playsinline muted loop autoplay preload="auto" aria-hidden="true">
+    <source src="video-fondo.mp4" type="video/mp4" />
+  </video>
+  <!-- Capa oscura sobre el video -->
+  <div id="bgOverlay" class="bg-overlay" aria-hidden="true"></div>
+
+  <main id="invitation" class="invitation hidden">
+
+    <!-- SECCIÓN 1 · PORTADA -->
+    <section class="scene scene-cover">
+      <div class="scene-content">
+        <p class="eyebrow">Mi Bautizo</p>
+        <h2 class="name">Mía Nicolette</h2>
+        <p class="surname">Monroy Ramírez</p>
+        <div class="divider">🌊</div>
+        <p class="cover-date">Lunes 28 de Diciembre · 2026</p>
+      </div>
+    </section>
+
+    <!-- SECCIÓN · CUENTA REGRESIVA -->
+    <section class="scene">
+      <div class="scene-content">
+        <h3 class="scene-title">Falta Poco</h3>
+        <div id="countdown" class="countdown">
+          <div class="cd-item"><span class="cd-num" id="cd-days">00</span><span class="cd-label">Días</span></div>
+          <div class="cd-item"><span class="cd-num" id="cd-hours">00</span><span class="cd-label">Horas</span></div>
+          <div class="cd-item"><span class="cd-num" id="cd-mins">00</span><span class="cd-label">Min</span></div>
+          <div class="cd-item"><span class="cd-num" id="cd-secs">00</span><span class="cd-label">Seg</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOTO -->
+    <section class="scene scene-photo">
+      <img class="photo" src="Fotos/foto1.jpg" alt="Mía Nicolette" loading="lazy" />
+    </section>
+
+    <!-- SECCIÓN 2 · LA BAUTIZADA -->
+    <section class="scene">
+      <div class="scene-content">
+        <h3 class="scene-title">Mi Bautizo</h3>
+        <p class="scene-text big">Mía Nicolette<br />Monroy Ramírez</p>
+      </div>
+    </section>
+
+    <!-- FOTO -->
+    <section class="scene scene-photo">
+      <img class="photo" src="Fotos/foto2.jpg" alt="Mía Nicolette" loading="lazy" />
+    </section>
+
+    <!-- SECCIÓN 3 · PADRES Y PADRINOS -->
+    <section class="scene">
+      <div class="scene-content">
+        <h3 class="scene-title">Con la bendición de</h3>
+
+        <p class="role-label">Mis Papás</p>
+        <p class="scene-text">Elvis Aaron Monroy Muñoz</p>
+        <p class="scene-text">Josselin Ramírez Arriaga</p>
+
+        <div class="mini-divider">❀</div>
+
+        <p class="role-label">Mis Padrinos de Bautizo</p>
+        <p class="scene-text">Víctor Joaquín Cárcamo Arriaga</p>
+        <p class="scene-text">Guadalupe Casas Herrera</p>
+      </div>
+    </section>
+
+    <!-- FOTO -->
+    <section class="scene scene-photo">
+      <img class="photo" src="Fotos/foto3.jpg" alt="Mía Nicolette" loading="lazy" />
+    </section>
+
+    <!-- SECCIÓN 4 · FECHA -->
+    <section class="scene">
+      <div class="scene-content">
+        <h3 class="scene-title">Reserva la Fecha</h3>
+        <p class="date-day">Lunes</p>
+        <p class="date-number">28</p>
+        <p class="date-rest">Diciembre · 2026</p>
+      </div>
+    </section>
+
+    <!-- FOTO -->
+    <section class="scene scene-photo">
+      <img class="photo" src="Fotos/foto4.jpg" alt="Mía Nicolette" loading="lazy" />
+    </section>
+
+    <!-- SECCIÓN 5 · MISA -->
+    <section class="scene">
+      <div class="scene-content">
+        <div class="icon-big">⛪</div>
+        <h3 class="scene-title">Ceremonia Religiosa</h3>
+        <p class="scene-text big">1:00 PM</p>
+        <p class="scene-text">Iglesia de Xaltetela</p>
+        <a class="map-btn" href="https://maps.app.goo.gl/TscwhXf7tuZehSo18" target="_blank" rel="noopener">
+          <span class="map-icon">📍</span> Cómo llegar
+        </a>
+      </div>
+    </section>
+
+    <!-- FOTO -->
+    <section class="scene scene-photo">
+      <img class="photo" src="Fotos/foto5.jpg" alt="Mía Nicolette" loading="lazy" />
+    </section>
+
+    <!-- SECCIÓN 6 · RECEPCIÓN -->
+    <section class="scene">
+      <div class="scene-content">
+        <div class="icon-big">🎉</div>
+        <h3 class="scene-title">Recepción</h3>
+        <p class="scene-text">De 3:00 a 4:00 PM</p>
+        <p class="scene-text big">Jardín del Salón Manchys</p>
+        <p class="scene-text">Comida: 4:00 a 6:00 PM</p>
+        <a class="map-btn" href="https://maps.app.goo.gl/5oLSzCGmsnKXwMWE6" target="_blank" rel="noopener">
+          <span class="map-icon">📍</span> Cómo llegar
+        </a>
+      </div>
+    </section>
+
+    <!-- FOTO -->
+    <section class="scene scene-photo">
+      <img class="photo" src="Fotos/foto6.jpg" alt="Mía Nicolette" loading="lazy" />
+    </section>
+
+    <!-- SECCIÓN 7 · HOTELES -->
+    <section class="scene">
+      <div class="scene-content">
+        <div class="icon-big">🏨</div>
+        <h3 class="scene-title">Sugerencia de Hospedaje</h3>
+        <div id="hotels" class="hotel-carousel">
+
+          <div class="hotel-slide">
+            <img class="hotel-img" src="Hoteles/plaza.jpg" alt="Hotel Plaza" loading="lazy" />
+            <p class="hotel-name">Hotel Plaza</p>
+            <a class="map-btn" href="https://maps.app.goo.gl/g8zMFBCYARkaBaNu7" target="_blank" rel="noopener">
+              <span class="map-icon">📍</span> Cómo llegar
+            </a>
+          </div>
+
+          <div class="hotel-slide">
+            <img class="hotel-img" src="Hoteles/quinta-san-jose.jpg" alt="Quinta San José" loading="lazy" />
+            <p class="hotel-name">Quinta San José</p>
+            <a class="map-btn" href="https://maps.app.goo.gl/6gse5FCkfkgnUmjH6" target="_blank" rel="noopener">
+              <span class="map-icon">📍</span> Cómo llegar
+            </a>
+          </div>
+
+          <div class="hotel-slide">
+            <img class="hotel-img" src="Hoteles/pozo-viejo.jpg" alt="Hotel Pozo Viejo" loading="lazy" />
+            <p class="hotel-name">Hotel Pozo Viejo</p>
+            <a class="map-btn" href="https://maps.app.goo.gl/nPCwJexGho7BKrao7" target="_blank" rel="noopener">
+              <span class="map-icon">📍</span> Cómo llegar
+            </a>
+          </div>
+
+        </div>
+        <div id="hotelDots" class="gallery-dots" aria-hidden="true"></div>
+        <p class="gallery-hint">Desliza para ver más →</p>
+      </div>
+    </section>
+
+    <!-- SECCIÓN · GALERÍA -->
+    <section class="scene">
+      <div class="scene-content">
+        <h3 class="scene-title">Galería</h3>
+        <div id="gallery" class="gallery">
+          <img class="gallery-img" src="Fotos/foto7.jpg"  alt="Mía Nicolette" loading="lazy" />
+          <img class="gallery-img" src="Fotos/foto8.jpg"  alt="Mía Nicolette" loading="lazy" />
+          <img class="gallery-img" src="Fotos/foto9.jpg"  alt="Mía Nicolette" loading="lazy" />
+          <img class="gallery-img" src="Fotos/foto10.jpg" alt="Mía Nicolette" loading="lazy" />
+          <img class="gallery-img" src="Fotos/foto11.jpg" alt="Mía Nicolette" loading="lazy" />
+          <img class="gallery-img" src="Fotos/foto12.jpg" alt="Mía Nicolette" loading="lazy" />
+        </div>
+        <div id="galleryDots" class="gallery-dots" aria-hidden="true"></div>
+        <p class="gallery-hint">Desliza para ver más →</p>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 8 · CONFIRMACIÓN (QR) -->
+    <section class="scene">
+      <div class="scene-content">
+        <div class="icon-big">💌</div>
+        <h3 class="scene-title">Confirma tu Asistencia</h3>
+        <p class="scene-text">Enviando un mensaje por WhatsApp</p>
+        <a class="wa-btn" href="https://wa.me/522215678784?text=%C2%A1Hola!%20Confirmo%20mi%20asistencia%20al%20bautizo%20de%20M%C3%ADa%20Nicolette%20%F0%9F%A4%8D" target="_blank" rel="noopener">
+          <span class="wa-icon">💬</span>
+          Confirmar por WhatsApp
+        </a>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 9 · CIERRE -->
+    <section class="scene scene-cover">
+      <div class="scene-content">
+        <p class="eyebrow">Te espero</p>
+        <h2 class="name">Mía Nicolette</h2>
+        <div class="divider">🧜‍♀️</div>
+        <p class="scene-text">¡Acompáñame a celebrar<br />este día tan especial!</p>
+      </div>
+    </section>
+
+    <!-- PIE · LOGO -->
+    <footer class="footer-logo">
+      <img src="logo-roca-blanco.png" alt="Logo" loading="lazy" />
+    </footer>
+
+  </main>
+
+  <!-- AUDIO DE FONDO -->
+  <audio id="bgAudio" loop preload="auto">
+    <source src="audio.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- CONTROL DE MÚSICA -->
+  <button id="musicBtn" class="music-btn hidden" type="button" aria-label="Pausar o reproducir música">🔊</button>
+
+  <!-- CAPA DE BURBUJAS DECORATIVAS -->
+  <div class="bubbles" aria-hidden="true"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
