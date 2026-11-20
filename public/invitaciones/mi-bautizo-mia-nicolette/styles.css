@@ -129,6 +129,8 @@ body {
 .start-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(243,210,122,.5); }
 .shell-icon { font-size: 1.3rem; }
 
+.welcome-confirm { margin-top: 6px; }
+
 .welcome-hint {
   margin-top: 18px;
   font-size: .85rem;
