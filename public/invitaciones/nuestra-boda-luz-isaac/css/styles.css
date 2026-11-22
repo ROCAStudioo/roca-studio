@@ -1,8 +1,8 @@
 /* ============ Paleta (ajustable) ============ */
 :root {
-  --olivo: #4F5E1F;
-  --salvia: #9DB0A0;
-  --salvia-oscuro: #6F8470;
+  --olivo: #4D5631;
+  --salvia: #9EAAA0;
+  --salvia-oscuro: #728173;
   --dorado: #A98A4A;
   --arena: #D4BE9D;
   --crema: #FDF4E7;
@@ -94,14 +94,14 @@ a { color: inherit; }
   min-height: 100svh; min-height: 100vh;
   display: grid; place-items: center; text-align: center; position: relative; overflow: hidden;
   color: var(--blanco-roto);
-  background: linear-gradient(160deg, #4F5E1F 0%, #5C6E4E 55%, #6F8470 100%);
+  background: linear-gradient(160deg, #4D5631 0%, #5D6854 55%, #728173 100%);
   background-size: cover; background-position: center;
   padding: 3rem 1.25rem;
 }
 .hero.con-foto { background-blend-mode: normal; background-position: center 40%; align-items: end; padding-bottom: 4.5rem; }
 @media (max-width: 899px) { .hero.con-foto { background-size: auto 120%; background-position: 45% 100%; } }
-.hero::before { content: ""; position: absolute; inset: 0; background: rgba(40,48,20,.45); }
-.hero:not(.con-foto)::before { background: rgba(30,38,16,.28); }
+.hero::before { content: ""; position: absolute; inset: 0; background: rgba(46,52,31,.45); }
+.hero:not(.con-foto)::before { background: rgba(37,43,26,.28); }
 .hero-contenido { position: relative; z-index: 1; max-width: 640px; }
 .hero .monograma { border-color: #E3CE9B; outline-color: rgba(227,206,155,.5); }
 .hero h1 { font-size: clamp(3.2rem, 14vw, 5.6rem); text-shadow: 0 2px 14px rgba(0,0,0,.28); }
@@ -118,6 +118,10 @@ a { color: inherit; }
 .e-tl { top: 12px; left: 12px; }
 .e-br { bottom: 12px; right: 12px; transform: rotate(180deg); }
 
+/* ============ Naturaleza muerta (portada) ============ */
+.bodegon { display: block; width: 220px; height: 90px; margin: 0 auto 1.1rem; color: #E3CE9B; opacity: .9; }
+.bodegon-apertura { width: 190px; height: 78px; margin: 0 auto 1.4rem; }
+
 /* ============ Botones ============ */
 .btn {
   display: inline-block; cursor: pointer; text-decoration: none;
@@ -127,11 +131,11 @@ a { color: inherit; }
   padding: .95rem 1.8rem; min-height: 48px;
   transition: background .25s, color .25s, transform .25s;
 }
-.btn:hover { background: #3F4C16; transform: translateY(-1px); }
+.btn:hover { background: #3C4324; transform: translateY(-1px); }
 .btn-claro { background: var(--blanco-roto); color: var(--olivo); border-color: var(--blanco-roto); }
 .btn-claro:hover { background: var(--crema); }
 .salvia .btn-claro { background: var(--olivo); color: var(--blanco-roto); border-color: var(--olivo); }
-.salvia .btn-claro:hover { background: #3F4C16; }
+.salvia .btn-claro:hover { background: #3C4324; }
 .btn-chico { padding: .7rem 1.3rem; font-size: .8rem; margin-top: .4rem; }
 
 /* ============ Cuenta regresiva ============ */
@@ -266,7 +270,7 @@ a { color: inherit; }
 .apertura { display: none; }
 .js .apertura {
   display: grid; place-items: center; position: fixed; inset: 0; z-index: 200; text-align: center; padding: 1.5rem;
-  background: radial-gradient(circle at 50% 35%, #56694F, #4F5E1F 75%); color: var(--blanco-roto);
+  background: radial-gradient(circle at 50% 35%, #586454, #4D5631 75%); color: var(--blanco-roto);
   transition: opacity .8s ease, visibility .8s;
 }
 .js .apertura.abierta { opacity: 0; visibility: hidden; pointer-events: none; }

@@ -6,7 +6,7 @@
   <title>Luz Elena &amp; Isaac – 17·07·2027</title>
   <base href="/invitacion/nuestra-boda-luz-isaac/">
   <meta name="description" content="Luz Elena & Isaac se casan el 17 de julio de 2027 en Piedra Viva, Tepoztlán, Morelos. Acompáñanos a celebrar.">
-  <meta name="theme-color" content="#4F5E1F">
+  <meta name="theme-color" content="#4D5631">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Luz Elena & Isaac – 17·07·2027">
   <meta property="og:description" content="Nos casamos el 17 de julio de 2027 en Piedra Viva, Tepoztlán. Te invitamos a celebrar con nosotros.">
@@ -80,6 +80,24 @@
     <symbol id="hoja" viewBox="0 0 32 32">
       <path d="M4 28 C4 12 14 4 28 4 C28 18 20 28 4 28 Z M4 28 L22 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
     </symbol>
+    <symbol id="bodegon" viewBox="0 0 220 90">
+      <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 62 A26 16 0 0 0 70 62 Z"/>
+        <circle cx="30" cy="52" r="7"/>
+        <circle cx="46" cy="45" r="8"/>
+        <circle cx="62" cy="52" r="7"/>
+        <path d="M96 22 h20 l-3 12 c6 10 4 22 -4 30 h-6 c-8 -8 -10 -20 -4 -30 Z"/>
+        <path d="M94 22 h24"/>
+        <path d="M106 22 C106 12 114 6 122 8"/>
+        <path d="M140 72 C150 52 166 36 188 28"/>
+        <g fill="currentColor" stroke="none" opacity=".9">
+          <ellipse cx="118" cy="10" rx="6" ry="3" transform="rotate(-30 118 10)"/>
+          <ellipse cx="152" cy="56" rx="8" ry="4.5" transform="rotate(-40 152 56)"/>
+          <ellipse cx="166" cy="42" rx="8" ry="4.5" transform="rotate(-25 166 42)"/>
+          <ellipse cx="182" cy="32" rx="8" ry="4.5" transform="rotate(-15 182 32)"/>
+        </g>
+      </g>
+    </symbol>
   </defs>
 </svg>
 
@@ -89,6 +107,7 @@
     <p class="eyebrow">Estás invitado</p>
     <div class="sello" aria-hidden="true"><span>L &amp; I</span></div>
     <p class="nombres-script">Luz Elena &amp; Isaac</p>
+    <svg class="bodegon bodegon-apertura" aria-hidden="true"><use href="#bodegon"/></svg>
     <button type="button" class="btn btn-claro" id="abrir">Toca para abrir</button>
   </div>
 </div>
@@ -111,6 +130,7 @@
       <p class="fecha-hero"><span>17</span><i></i><span>07</span><i></i><span>2027</span></p>
       <!-- EDITAR: frase de amor (cita de portada; es el título de su canción) -->
       <p class="cita">“Siempre te busqué”</p>
+      <svg class="bodegon" aria-hidden="true"><use href="#bodegon"/></svg>
       <a class="scroll-hint" href="#bienvenida" aria-label="Ir a la invitación">
         <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M5 9 L12 16 L19 9" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
       </a>
@@ -156,7 +176,7 @@
         <svg class="hoja-sep" aria-hidden="true"><use href="#hoja"/></svg>
         <div class="padres-col">
           <h3 class="subtitulo">Padres del novio</h3>
-          <p>María Anabella Quiroz Domínguez</p>
+          <p>María Anabella Domínguez Rodríguez</p>
           <p>Juan Manuel Quiroz Cabrera</p>
         </div>
       </div>
@@ -252,7 +272,38 @@
       <a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Piedra+Viva+Tepoztl%C3%A1n+Morelos" target="_blank" rel="noopener">Ver ubicación</a>
       <div class="nota">
         <h3 class="subtitulo">Nota para nuestros invitados</h3>
-        <p>El evento inicia en una zona fuera del salón, dentro del mismo hotel, reservada exclusivamente para los novios. Junto a ella, en otra área, se encuentra el salón de la boda.</p>
+        <p>La ceremonia se realizará en el área de la cascada, dentro del mismo hotel, el cual está reservado en su totalidad para los novios y sus invitados. A su costado se encontrará el salón de boda.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOSPEDAJE -->
+  <section class="seccion centro" id="hospedaje" aria-labelledby="t-hospedaje">
+    <div class="contenedor reveal">
+      <svg class="divisor" aria-hidden="true"><use href="#rama"/></svg>
+      <h2 id="t-hospedaje" class="titulo">Hospedaje</h2>
+      <p class="lead">Sugerencia de otros hospedajes cercanos.</p>
+      <div class="regalos">
+        <article class="regalo-card">
+          <h3 class="subtitulo">Hotel Amomoxtli</h3>
+          <p>C. Netzahualcóyotl 115, Valle de Atongo, 62520 Tepoztlán, Mor.</p>
+          <a class="btn btn-chico" href="https://www.google.com/maps/search/?api=1&amp;query=Hotel+Amomoxtli+Tepoztl%C3%A1n+Morelos" target="_blank" rel="noopener">Ver ubicación</a>
+        </article>
+        <article class="regalo-card">
+          <h3 class="subtitulo">Hotel Buena Vibra</h3>
+          <p>San Lorenzo 7, Valle de Atongo, 62520 Tepoztlán, Mor.</p>
+          <a class="btn btn-chico" href="https://www.google.com/maps/search/?api=1&amp;query=Hotel+Buena+Vibra+Tepoztl%C3%A1n+Morelos" target="_blank" rel="noopener">Ver ubicación</a>
+        </article>
+        <article class="regalo-card">
+          <h3 class="subtitulo">Hotel Boutique Casa de Agua</h3>
+          <p>Amatlán, Rinconada del Carmen, 62524 Tepoztlán, Mor.</p>
+          <a class="btn btn-chico" href="https://www.google.com/maps/search/?api=1&amp;query=Hotel+Boutique+Casa+de+Agua+Tepoztl%C3%A1n+Morelos" target="_blank" rel="noopener">Ver ubicación</a>
+        </article>
+        <article class="regalo-card">
+          <h3 class="subtitulo">Hotel Boutique Casa Fernanda</h3>
+          <p>Del Niño Artillero 20, San Jose, 62520 Tepoztlán, Mor.</p>
+          <a class="btn btn-chico" href="https://www.google.com/maps/search/?api=1&amp;query=Hotel+Boutique+Casa+Fernanda+Tepoztl%C3%A1n+Morelos" target="_blank" rel="noopener">Ver ubicación</a>
+        </article>
       </div>
     </div>
   </section>

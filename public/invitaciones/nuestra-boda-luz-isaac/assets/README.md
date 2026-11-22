@@ -2,7 +2,7 @@
 
 | Archivo | Contenido |
 |---|---|
-| `photos/portada.jpg` | Portada (IS.ED-12, 1333x2000). Se encuadra con `background-position: center 28%` en css/styles.css |
+| `photos/portada.jpg` | Portada (foto en blanco y negro de los novios abrazados, 1333x2000; es la misma que `foto5.jpg` del carrusel). Se encuadra con `background-position: center 28%` en css/styles.css |
 | `photos/og.jpg` | Vista previa para WhatsApp (1200x630). Al publicar, `og:image` en index.html debe ser una URL absoluta (https://tu-dominio/assets/photos/og.jpg) |
 | `photos/poster.jpg` | Imagen previa del video (fotograma a los 3 s) |
 | `photos/foto1.jpg` ... `foto12.jpg` | Carrusel (1067x1600). Orden: 30, 24, 12, 13, 10, 103, 28, 117, 7, 48, 47, 79 de "Fotos y video" |
