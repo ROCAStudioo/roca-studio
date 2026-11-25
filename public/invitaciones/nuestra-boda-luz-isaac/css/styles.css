@@ -78,6 +78,7 @@ a { color: inherit; }
 .nombres-script { font-family: var(--f-script); font-weight: 400; margin: 0; line-height: 1.1; }
 
 .divisor { display: block; width: 180px; height: 54px; margin: 0 auto 1rem; color: var(--dorado); }
+.apertura .divisor, .hero .divisor { color: #E3CE9B; }
 .icono-grande { color: var(--olivo); margin: 0 auto .6rem; display: block; }
 
 /* ============ Monograma ============ */
@@ -232,7 +233,8 @@ a { color: inherit; }
 .vestimenta { display: grid; gap: 1rem; margin-top: 1.6rem; }
 .vest-card { background: var(--crema); border: 1px solid var(--dorado); outline: 1px solid rgba(169,138,74,.4); outline-offset: -6px; padding: 1.6rem 1rem; border-radius: 4px; }
 .vest-main { font-size: 1.7rem; margin: 0; }
-.no-guayabera { display: inline-block; margin: .7rem 0 0; font-family: var(--f-titulo); text-transform: uppercase; letter-spacing: .16em; font-size: .9rem; font-weight: 600; color: var(--blanco-roto); background: var(--olivo); padding: .4rem 1rem; border-radius: 999px; }
+.no-guayabera, .vest-nota { display: inline-block; margin: .7rem 0 0; font-family: var(--f-titulo); text-transform: uppercase; letter-spacing: .16em; font-size: .9rem; font-weight: 600; color: var(--blanco-roto); background: var(--olivo); padding: .4rem 1rem; border-radius: 999px; }
+.vest-nota { margin-top: 1.6rem; }
 @media (min-width: 700px) { .vestimenta { grid-template-columns: 1fr 1fr; } }
 
 /* ============ Regalos ============ */
