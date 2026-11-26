@@ -171,6 +171,7 @@
   }
   .btn svg{ width:17px; height:17px; flex:none; }
   .btn.ghost{ background:transparent; color:var(--navy-800); box-shadow:none; }
+  .btn.on-dark{ background:var(--gold); color:var(--navy-900); border-color:var(--gold-light); box-shadow:0 8px 18px rgba(0,0,0,.35); }
   .btn:active{ transform:scale(.97); }
 
   /* countdown */
@@ -243,9 +244,73 @@
   }
   .toast.show{ opacity:1; transform:translate(-50%,0); }
 
+  /* ---------- Closed book ("Toca para abrir") ---------- */
+  .closed-book{
+    position:fixed; inset:0; z-index:40; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:30px;
+    padding:20px; cursor:pointer;
+    background:radial-gradient(110% 80% at 50% 20%, #16305c 0%, var(--navy-900) 55%, var(--navy-950) 100%);
+    transition:opacity .6s ease, visibility .6s;
+  }
+  .closed-book.gone{ opacity:0; visibility:hidden; pointer-events:none; }
+  .cb-scene{ position:relative; }
+  .cb-glow{
+    position:absolute; inset:-16% -22%; pointer-events:none; opacity:0; transition:opacity 1.1s ease .25s;
+    background:radial-gradient(45% 55% at 32% 50%, rgba(233,209,147,.55), rgba(233,209,147,.12) 55%, transparent 75%);
+  }
+  .closed-book.opening .cb-glow{ opacity:1; }
+  .cb-book{ position:relative; width:min(76vw, 320px); aspect-ratio:3 / 4.05; perspective:1500px; }
+  .cb-back{
+    position:absolute; inset:0; border-radius:6px 14px 14px 6px;
+    background:linear-gradient(165deg, #1a3565 0%, var(--navy-800) 48%, #0a1c3a 100%);
+    box-shadow:26px 34px 60px rgba(0,0,0,.6);
+  }
+  .cb-edge{
+    position:absolute; top:5px; bottom:5px; right:-7px; width:7px; border-radius:0 3px 3px 0;
+    background:repeating-linear-gradient(to right, #f6edd6 0 2px, #d8c9a4 2px 3px);
+  }
+  .cb-leaf{
+    position:absolute; top:5px; bottom:5px; left:4px; right:2px; border-radius:4px 10px 10px 4px;
+    background:linear-gradient(160deg, #fdf8ea 0%, var(--paper) 55%, var(--paper-2) 100%);
+    box-shadow:inset -8px 0 14px rgba(120,95,40,.18), inset 6px 0 10px rgba(120,95,40,.12);
+    transform-origin:0% 50%; transition:transform 1.45s cubic-bezier(.32,.58,.28,1);
+  }
+  .cb-cover{
+    position:absolute; inset:0; border-radius:6px 14px 14px 6px; overflow:hidden;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+    padding:28px 24px; color:#f3e9cd;
+    background:
+      radial-gradient(90% 55% at 50% 30%, rgba(61,99,165,.55), transparent 65%),
+      repeating-linear-gradient(115deg, rgba(233,209,147,.03) 0 2px, transparent 2px 7px),
+      linear-gradient(165deg, #1a3565 0%, var(--navy-800) 48%, #0a1c3a 100%);
+    border:1px solid rgba(233,209,147,.4);
+    box-shadow:14px 20px 44px rgba(0,0,0,.5);
+    transform-origin:0% 50%; backface-visibility:hidden; -webkit-backface-visibility:hidden;
+    transition:transform 1.6s cubic-bezier(.35,.55,.25,1);
+  }
+  .cb-cover::before{
+    content:""; position:absolute; top:0; bottom:0; left:0; width:16px;
+    background:linear-gradient(to right, rgba(0,0,0,.38), rgba(233,209,147,.14) 55%, transparent);
+  }
+  .cb-frame{ position:absolute; inset:11px; border:1px solid rgba(233,209,147,.65); border-radius:4px 10px 10px 4px; pointer-events:none; }
+  .cb-frame::after{ content:""; position:absolute; inset:4px; border:1px solid rgba(233,209,147,.3); border-radius:inherit; }
+  .closed-book.opening .cb-cover{ transform:rotateY(-172deg); }
+  .closed-book.opening .cb-leaf.l1{ transform:rotateY(-148deg); transition-delay:.14s; }
+  .closed-book.opening .cb-leaf.l2{ transform:rotateY(-124deg); transition-delay:.26s; }
+  .closed-book.opening .cb-leaf.l3{ transform:rotateY(-98deg); transition-delay:.38s; }
+  .cb-hint{
+    display:flex; align-items:center; gap:12px; margin:0;
+    font-family:var(--serif); font-style:italic; font-size:1.3rem; color:var(--gold-light);
+    transition:opacity .3s;
+  }
+  .closed-book.opening .cb-hint{ opacity:0; }
+  .cb-pulse{ width:13px; height:13px; flex:none; border-radius:50%; background:var(--gold-light); animation:cbPulse 1.6s ease-out infinite; }
+  @keyframes cbPulse{ 0%{ box-shadow:0 0 0 0 rgba(233,209,147,.5); } 70%{ box-shadow:0 0 0 17px rgba(233,209,147,0); } 100%{ box-shadow:0 0 0 0 rgba(233,209,147,0); } }
+
   @media (prefers-reduced-motion: reduce){
     .corner .fold{ animation:none; }
     .loader .bar i{ animation-duration:.2s; }
+    .cb-pulse{ animation:none; }
+    .cb-cover, .cb-leaf{ transition-duration:.25s; }
   }
 </style>
 </head>
@@ -287,6 +352,30 @@
   <p>Cargando invitación…</p>
 </div>
 
+<div class="closed-book" id="closedBook" role="button" tabindex="0" aria-label="Toca para abrir la invitación">
+  <div class="cb-scene">
+    <div class="cb-glow"></div>
+    <div class="cb-book">
+      <div class="cb-back"></div>
+      <div class="cb-edge"></div>
+      <div class="cb-leaf l3"></div>
+      <div class="cb-leaf l2"></div>
+      <div class="cb-leaf l1"></div>
+      <div class="cb-cover">
+        <div class="cb-frame"></div>
+        <svg class="cover-crown" viewBox="0 0 48 44"><use href="#crown-g"/></svg>
+        <p class="cover-mis">Mis</p>
+        <p class="cover-xv">XV AÑOS</p>
+        <p class="cover-name">Ximena</p>
+        <div class="rule"><svg viewBox="0 0 118 14"><use href="#rule-g"/></svg></div>
+        <p class="cover-date">19 · DICIEMBRE</p>
+        <svg class="cover-butterfly" viewBox="0 0 48 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M22 18 C12 4 2 6 3 15 C4 23 13 24 22 21 C13 25 6 31 10 36 C13 40 20 32 22 24 L22 18Z"/><path d="M26 18 C36 4 46 6 45 15 C44 23 35 24 26 21 C35 25 42 31 38 36 C35 40 28 32 26 24 L26 18Z"/><line x1="24" y1="14" x2="24" y2="30"/></svg>
+      </div>
+    </div>
+  </div>
+  <p class="cb-hint"><span class="cb-pulse"></span> Toca para abrir</p>
+</div>
+
 <div class="app">
   <div class="topbar">
     <span class="brand">Mis XV Años · Ximena</span>
@@ -326,7 +415,7 @@
 
 <div class="toast" id="toast" role="status"></div>
 
-<audio id="bgMusic" src="mr-blue-sky.mp3" loop preload="none"></audio>
+<audio id="bgMusic" src="mr-blue-sky.mp3" loop preload="auto"></audio>
 
 <script>
 (function(){
@@ -353,7 +442,8 @@
     music:    ic('<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>'),
     heart:    ic('<path d="M12 20.5C6 16.5 3 13.3 3 9.6 3 7 5 5 7.5 5c1.8 0 3.4 1 4.5 2.6C13.1 6 14.7 5 16.5 5 19 5 21 7 21 9.6c0 3.7-3 6.9-9 10.9Z"/>'),
     whatsapp: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.2-.8l.5-.6c.1-.2 0-.4 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4 .6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3Z"/></svg>',
-    calPlus:  ic('<rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/><line x1="12" y1="13" x2="12" y2="18"/><line x1="9.5" y1="15.5" x2="14.5" y2="15.5"/>')
+    calPlus:  ic('<rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/><line x1="12" y1="13" x2="12" y2="18"/><line x1="9.5" y1="15.5" x2="14.5" y2="15.5"/>'),
+    home:     ic('<path d="M4 11.5 L12 4 L20 11.5"/><path d="M6.2 9.8 V20 H17.8 V9.8"/><path d="M10 20v-4.8h4V20"/>')
   };
 
   function florals(){
@@ -368,8 +458,6 @@
   function rule(){ return '<div class="rule"><svg viewBox="0 0 118 14"><use href="#rule-g"/></svg></div>'; }
   function iconLg(name){ return '<div class="icon-lg">' + I[name] + '</div>'; }
 
-  var MAPS = 'https://www.google.com/maps/search/?api=1&query=';
-
   /* ================= Pages ================= */
   var pages = [
     { name: 'Portada', html:
@@ -379,7 +467,7 @@
       '<h1 class="cover-name">Ximena</h1>' + rule() +
       '<p class="cover-date">19 · DICIEMBRE</p>' +
       '<svg class="cover-butterfly" viewBox="0 0 48 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M22 18 C12 4 2 6 3 15 C4 23 13 24 22 21 C13 25 6 31 10 36 C13 40 20 32 22 24 L22 18Z"/><path d="M26 18 C36 4 46 6 45 15 C44 23 35 24 26 21 C35 25 42 31 38 36 C35 40 28 32 26 24 L26 18Z"/><line x1="24" y1="14" x2="24" y2="30"/></svg>' +
-      '<p class="cover-song">Un libro de recuerdos · Toca la esquina para abrir</p></div>' },
+      '<p class="cover-song">Un libro de recuerdos</p></div>' },
 
     { name: 'Portada interior', html: frame(
       '<svg class="cover-crown" viewBox="0 0 48 44" style="color:var(--gold-deep);width:54px"><use href="#crown-g"/></svg>' +
@@ -427,7 +515,7 @@
       '<h2 class="script h-script" style="font-size:clamp(2rem,9.5vw,2.7rem)">Misa de acción de gracias</h2>' + rule() +
       '<p class="place">Parroquia Luteranense<br/>de San Pedro Apóstol</p>' +
       '<p class="time-big">1:00 pm</p>' +
-      '<a class="btn" target="_blank" rel="noopener" href="' + MAPS + encodeURIComponent('Parroquia de San Pedro Apóstol') + '">' + I.pin + ' Cómo llegar</a>'
+      '<a class="btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/qFeVwxzFT5kfSLou7">' + I.pin + ' Cómo llegar</a>'
     )},
 
     { name: 'Recepción', html: frame(
@@ -436,7 +524,7 @@
       '<h2 class="script h-script">A celebrar</h2>' + rule() +
       '<p class="place">Salón de Eventos<br/>del Hotel Pozo Viejo</p>' +
       '<p class="time-big">3:00 pm</p>' +
-      '<a class="btn" target="_blank" rel="noopener" href="' + MAPS + encodeURIComponent('Hotel Pozo Viejo salón de eventos') + '">' + I.pin + ' Cómo llegar</a>'
+      '<a class="btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/CDwQhotPu4TN9M2h7">' + I.pin + ' Cómo llegar</a>'
     )},
 
     { name: 'Cronograma', html: frame(
@@ -451,20 +539,12 @@
       '</div>'
     )},
 
-    { name: 'Mesa de regalos', html: frame(
-      iconLg('gift') +
-      '<p class="kicker">Mesa de regalos</p>' +
-      '<h2 class="script h-script" style="font-size:clamp(2rem,9.5vw,2.7rem)">Tu presencia es el regalo</h2>' + rule() +
-      '<p class="names" style="font-size:1.5rem">No aplica</p>' +
-      '<p class="body-txt" style="margin-top:10px">No habrá mesa de regalos.<br/>Contar contigo en este día<br/>es más que suficiente.</p>'
-    )},
-
     { name: 'Lluvia de sobres', html: frame(
       iconLg('envelope') +
-      '<p class="kicker">Tipo de regalos</p>' +
-      '<h2 class="script" style="font-size:clamp(1.95rem,9vw,2.6rem);line-height:1.15">¿Qué tipo de regalos<br/>les gusta recibir?</h2>' + rule() +
-      '<p class="names" style="font-size:1.55rem">Lluvia de sobres</p>' +
-      '<p class="body-txt" style="margin-top:10px">Si deseas obsequiarme algo,<br/>habrá sobres disponibles<br/>el día del evento.</p>'
+      '<p class="kicker">Tipo de regalo</p>' +
+      '<h2 class="script h-script">Lluvia de Sobres</h2>' + rule() +
+      '<p class="body-txt">Si deseas obsequiarme algo,<br/>habrá sobres disponibles<br/>el día del evento.</p>' +
+      '<p class="body-txt" style="margin-top:12px">Tu presencia es, de verdad,<br/>el mejor regalo.</p>'
     )},
 
     { name: 'Código de vestimenta', html: frame(
@@ -489,6 +569,7 @@
       '<div style="color:var(--gold-light);width:46px">' + I.heart + '</div>' +
       '<h2 class="script" style="font-size:clamp(2.6rem,12vw,3.4rem);color:#fdf6dc;margin-top:8px">Gracias por<br/>ser parte de<br/>mi historia</h2>' + rule() +
       '<p style="font-family:var(--serif);font-style:italic;font-size:1.15rem;color:var(--blue-pale);margin:0">19 de diciembre · Ximena</p>' +
+      '<button class="btn on-dark" type="button" data-action="home">' + I.home + ' Volver al inicio</button>' +
       '<p class="cover-song" style="margin-top:22px">Fin del libro · Tema: Mr. Blue Sky</p></div>' }
   ];
 
@@ -608,6 +689,21 @@
       renderIdle();
     });
   }
+  function goHome(){
+    if (animating || current === 0) return;
+    cornerR.classList.remove('show'); cornerL.classList.remove('show');
+    // Same reverse sheet turn as goPrev — the sheet un-turns from the left,
+    // hinged on the spine, until the first page lies flat again.
+    faceFront.innerHTML = faceHTML(pages[0].html, false);
+    faceBack.innerHTML = faceHTML(pages[current].html, true);
+    setUnder(0);
+    grabOverlays(); setAngle(-180);
+    animateAngle(-180, 0, 1150, function(){
+      current = 0;
+      renderIdle();
+      showToast('De vuelta al inicio del libro');
+    });
+  }
   nextBtn.addEventListener('click', goNext);
   prevBtn.addEventListener('click', goPrev);
   document.addEventListener('keydown', function(e){
@@ -698,6 +794,8 @@
   document.addEventListener('click', function(e){
     var b = e.target.closest('[data-action="ics"]');
     if (b) downloadICS();
+    var h = e.target.closest('[data-action="home"]');
+    if (h) goHome();
   });
   function downloadICS(){
     var ics = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Invitacion Ximena//XV//ES','BEGIN:VEVENT',
@@ -739,19 +837,39 @@
   var musicBtn = document.getElementById('musicBtn');
   var bgMusic = document.getElementById('bgMusic');
   var musicOn = false;
-  musicBtn.addEventListener('click', function(){
-    if (!musicOn){
-      musicOn = true; musicBtn.classList.add('playing');
-      var pr = bgMusic.play();
-      if (pr && pr.catch) pr.catch(function(){
-        musicOn = false; musicBtn.classList.remove('playing');
-        showToast('No se pudo reproducir la música');
-      });
-      showToast('Sonando: Mr. Blue Sky');
-    } else {
-      bgMusic.pause();
+  function startMusic(){
+    if (musicOn) return;
+    musicOn = true; musicBtn.classList.add('playing');
+    var pr = bgMusic.play();
+    if (pr && pr.catch) pr.catch(function(){
       musicOn = false; musicBtn.classList.remove('playing');
-    }
+      showToast('No se pudo reproducir la música');
+    });
+  }
+  function stopMusic(){
+    bgMusic.pause();
+    musicOn = false; musicBtn.classList.remove('playing');
+  }
+  musicBtn.addEventListener('click', function(){
+    if (!musicOn){ startMusic(); showToast('Sonando: Mr. Blue Sky'); }
+    else stopMusic();
+  });
+
+  /* ===== Closed book: the "Toca para abrir" tap unlocks the audio, so
+     Mr. Blue Sky starts the moment the book begins to open ===== */
+  var closedBook = document.getElementById('closedBook');
+  var bookOpened = false;
+  function openBook(){
+    if (bookOpened) return;
+    bookOpened = true;
+    startMusic();
+    closedBook.classList.add('opening');
+    setTimeout(function(){ closedBook.classList.add('gone'); }, 1750);
+    setTimeout(function(){ closedBook.style.display = 'none'; }, 2500);
+  }
+  closedBook.addEventListener('click', openBook);
+  closedBook.addEventListener('keydown', function(e){
+    if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openBook(); }
   });
 
   /* ================= Toast + loader ================= */
