@@ -246,21 +246,28 @@
 
   /* ---------- Closed book ("Toca para abrir") ---------- */
   .closed-book{
-    position:fixed; inset:0; z-index:40; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px;
-    padding:16px 12px calc(16px + env(safe-area-inset-bottom)); cursor:pointer;
+    position:fixed; inset:0; z-index:40; display:flex; flex-direction:column;
+    padding:10px 12px calc(10px + env(safe-area-inset-bottom)); cursor:pointer;
     background:radial-gradient(110% 80% at 50% 20%, #16305c 0%, var(--navy-900) 55%, var(--navy-950) 100%);
     transition:opacity .6s ease, visibility .6s;
   }
   .closed-book.gone{ opacity:0; visibility:hidden; pointer-events:none; }
-  .cb-scene{ position:relative; width:100%; display:flex; justify-content:center; }
+  /* The overlay reuses the open book's exact layout (.app): same padding, a
+     44px top spacer where the topbar sits, a scene with the same flex and
+     padding as .stage-wrap, and an 88px bottom strip where the controls and
+     hint line sit — so the closed book gets precisely the same box as .stage. */
+  .cb-top{ flex:none; height:44px; }
+  .cb-scene{ position:relative; flex:1; min-height:0; width:100%; display:flex; padding:6px 0 2px; }
+  .cb-bottom{ flex:none; height:88px; display:flex; align-items:center; justify-content:center; }
   .cb-glow{
     position:absolute; inset:-16% -22%; pointer-events:none; opacity:0; transition:opacity 1.1s ease .25s;
     background:radial-gradient(45% 55% at 32% 50%, rgba(233,209,147,.55), rgba(233,209,147,.12) 55%, transparent 75%);
   }
   .closed-book.opening .cb-glow{ opacity:1; }
-  /* Same size as the open book (.stage): fills the width like the pages do,
-     and is capped only so book + hint still fit the viewport height. */
-  .cb-book{ position:relative; width:min(94vw, 520px, calc((100dvh - 132px) * 3 / 4.05)); aspect-ratio:3 / 4.05; perspective:1500px; flex:none; }
+  /* Sized exactly like .stage — height:100% of the scene, same aspect ratio,
+     same max-width — with no width cap of its own, so the closed book is
+     identical in width and height to the open pages on phone and desktop. */
+  .cb-book{ position:relative; margin:auto; height:100%; max-height:100%; max-width:100%; aspect-ratio:3 / 4.05; perspective:1500px; }
   .cb-back{
     position:absolute; inset:0; border-radius:6px 14px 14px 6px;
     background:linear-gradient(165deg, #1a3565 0%, var(--navy-800) 48%, #0a1c3a 100%);
@@ -355,9 +362,10 @@
 </div>
 
 <div class="closed-book" id="closedBook" role="button" tabindex="0" aria-label="Toca para abrir la invitación">
+  <div class="cb-top" aria-hidden="true"></div>
   <div class="cb-scene">
-    <div class="cb-glow"></div>
     <div class="cb-book">
+      <div class="cb-glow"></div>
       <div class="cb-back"></div>
       <div class="cb-edge"></div>
       <div class="cb-leaf l3"></div>
@@ -375,7 +383,9 @@
       </div>
     </div>
   </div>
-  <p class="cb-hint"><span class="cb-pulse"></span> Toca para abrir</p>
+  <div class="cb-bottom">
+    <p class="cb-hint"><span class="cb-pulse"></span> Toca para abrir</p>
+  </div>
 </div>
 
 <div class="app">
